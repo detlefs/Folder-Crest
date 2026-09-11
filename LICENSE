@@ -27,10 +27,6 @@ Third-party material
 The license above covers the source code of this project. It does not cover
 the Apple material bundled alongside it, which remains under Apple's own terms:
 
-- Folder Crest/Resources/Fonts/SF-Pro-Rounded-*.otf — the SF Pro Rounded
-  typeface, covered by the Apple license that accompanies the SF font
-  downloads. Apple permits it to be embedded in an app; it may not be
-  redistributed or modified on its own.
 - Folder Crest/Resources/Folders/*.png — the macOS folder artwork from
   Big Sur, Catalina and Tahoe, copyright Apple Inc.
 - Folder Crest/app_icon.icon — built from SF Symbols, which Apple's license

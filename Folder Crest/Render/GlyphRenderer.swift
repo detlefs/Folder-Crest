@@ -11,60 +11,32 @@
 //  353 × 371, with the ink itself sitting at x = 15...338 — the horizontal side
 //  bearings are part of the box, the vertical ones are not.
 //
-//  Core Text is used directly rather than NSFont/SwiftUI text so that the glyph
-//  to mask step stays under our control, the way Pillow's ImageFont + mask does.
+//  Core Text draws the line rather than SwiftUI text so that the glyph to mask
+//  step stays under our control, the way Pillow's ImageFont + mask does. AppKit
+//  only supplies the font descriptor for the rounded system face.
 //
 
+import AppKit
 import CoreGraphics
 import CoreText
 import Foundation
 
 enum GlyphRenderer {
 
-    /// Core Text's own font key — spelling it out keeps AppKit out of the
-    /// render layer.
+    /// Core Text's own attribute keys, spelled out rather than taken from
+    /// AppKit: the line is laid out and drawn by Core Text, not by AppKit.
     private static let fontAttribute = kCTFontAttributeName as NSAttributedString.Key
     private static let colourAttribute =
         kCTForegroundColorAttributeName as NSAttributedString.Key
-
-    /// Registers the bundled SF Pro Rounded faces with Core Text. They are the
-    /// 2023 release, deliberately kept at that version: the metrics decide
-    /// where the engraving sits, and a newer cut would move it.
-    static func registerBundledFonts() {
-        _ = fontsRegistered
-    }
-
-    /// A `static let` initialiser runs exactly once and is thread safe, which
-    /// is all the once-only guarantee this needs.
-    private static let fontsRegistered: Bool = {
-        for weight in SFFont.allCases {
-            guard let url = Bundle.main.url(forResource: weight.filename, withExtension: "otf")
-                    ?? Bundle.main.url(forResource: weight.filename, withExtension: "otf",
-                                       subdirectory: "Fonts")
-            else { continue }
-
-            var error: Unmanaged<CFError>?
-            // .process, not .persistent: the faces belong to this app, they
-            // have no business showing up in every font menu on the machine
-            CTFontManagerRegisterFontsForURL(url as CFURL, .process, &error)
-            // An already registered face is the expected outcome on a second
-            // launch of the same process image, not a failure worth surfacing
-            error?.release()
-        }
-        return true
-    }()
 
     /// Builds the icon mask for a piece of text.
     ///
     /// - Returns: A mask with the subject in white on black, or `nil` if the
     ///   text produces no glyphs at all.
     static func mask(text: String, imageSize: Int, weight: SFFont) -> PixelBuffer? {
-        registerBundledFonts()
-
         guard !text.isEmpty else { return nil }
 
-        let font = CTFontCreateWithName(weight.postScriptName as CFString,
-                                        Double(imageSize) / 2, nil)
+        let font = weight.roundedSystemFont(size: Double(imageSize) / 2)
         // The colour has to ride on the string: CTLineDraw ignores the
         // context's fill colour and would paint nothing at all
         let line = CTLineCreateWithAttributedString(
@@ -121,17 +93,35 @@ enum GlyphRenderer {
 }
 
 extension SFFont {
-    var postScriptName: String {
+
+    /// The macOS rounded system face for this weight — SF Rounded ships with
+    /// the OS, so nothing has to be bundled or registered.
+    ///
+    /// Its outlines are the same design as the SF Pro Rounded release the
+    /// Python reference uses, but not byte for byte the same cut: about 1.5 %
+    /// of the mask pixels differ along the glyph edges, and an occasional ink
+    /// box comes out a pixel shorter. Accepted deliberately on 2026-09-11 in
+    /// exchange for dropping 55 MB of font files from the bundle.
+    func roundedSystemFont(size: Double) -> CTFont {
+        let system = NSFont.systemFont(ofSize: size, weight: nsWeight)
+        // A missing rounded variant would be an OS without SF Rounded, which
+        // no supported macOS is — fall back to the plain system face anyway
+        // rather than trade a font substitution for a crash.
+        guard let rounded = system.fontDescriptor.withDesign(.rounded) else { return system }
+        return CTFontCreateWithFontDescriptor(rounded, size, nil)
+    }
+
+    private var nsWeight: NSFont.Weight {
         switch self {
-        case .ultralight: "SFProRounded-Ultralight"
-        case .thin:       "SFProRounded-Thin"
-        case .light:      "SFProRounded-Light"
-        case .regular:    "SFProRounded-Regular"
-        case .medium:     "SFProRounded-Medium"
-        case .semibold:   "SFProRounded-Semibold"
-        case .bold:       "SFProRounded-Bold"
-        case .heavy:      "SFProRounded-Heavy"
-        case .black:      "SFProRounded-Black"
+        case .ultralight: .ultraLight
+        case .thin:       .thin
+        case .light:      .light
+        case .regular:    .regular
+        case .medium:     .medium
+        case .semibold:   .semibold
+        case .bold:       .bold
+        case .heavy:      .heavy
+        case .black:      .black
         }
     }
 }

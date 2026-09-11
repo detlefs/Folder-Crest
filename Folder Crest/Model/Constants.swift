@@ -96,27 +96,12 @@ enum TintColour: String, CaseIterable {
     }
 }
 
-/// Weights of the bundled SF Pro Rounded fonts. The raw values match the slider
+/// Weights of the rounded system font. The raw values match the slider
 /// positions of the reference implementation.
 enum SFFont: Int, CaseIterable {
     case ultralight = 1, thin, light, regular, medium, semibold, bold, heavy, black
 
     static let `default` = SFFont.bold
-
-    /// Filename in the bundled fonts folder.
-    var filename: String {
-        switch self {
-        case .ultralight: "SF-Pro-Rounded-Ultralight"
-        case .thin:       "SF-Pro-Rounded-Thin"
-        case .light:      "SF-Pro-Rounded-Light"
-        case .regular:    "SF-Pro-Rounded-Regular"
-        case .medium:     "SF-Pro-Rounded-Medium"
-        case .semibold:   "SF-Pro-Rounded-Semibold"
-        case .bold:       "SF-Pro-Rounded-Bold"
-        case .heavy:      "SF-Pro-Rounded-Heavy"
-        case .black:      "SF-Pro-Rounded-Black"
-        }
-    }
 }
 
 /// How the icon on top of the folder is produced.

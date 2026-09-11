@@ -3,7 +3,9 @@
 //  Folder Crest
 //
 //  The saved icons. Adding and removing sit in the footer, right under the list
-//  the result appears in — the pattern every macOS source list uses.
+//  the result appears in — the pattern every macOS source list uses. Renaming
+//  goes through SwiftUI's own `RenameButton`/`.renameAction` pair, so the
+//  context menu entry, its wording and its shortcut come from the system.
 //
 
 import SwiftData
@@ -15,13 +17,21 @@ struct LibrarySidebar: View {
     @Query(sort: \SavedIcon.createdAt, order: .reverse) private var icons: [SavedIcon]
 
     @Binding var selection: SavedIcon?
+    @State private var renaming: UUID?
 
     var body: some View {
         VStack(spacing: 0) {
             List(selection: $selection) {
                 Section {
                     ForEach(icons) { icon in
-                        LibraryRow(icon: icon).tag(icon)
+                        LibraryRow(icon: icon,
+                                   isRenaming: renaming == icon.id,
+                                   endRename: { renaming = nil })
+                            .tag(icon)
+                            .contextMenu { RenameButton() }
+                            .renameAction { renaming = icon.id }
+                            .simultaneousGesture(
+                                TapGesture(count: 2).onEnded { renaming = icon.id })
                     }
                 } header: {
                     Text("My Icons", comment: "Heading of the saved icons list")
@@ -82,6 +92,7 @@ struct LibrarySidebar: View {
         icon.thumbnail = thumbnail
         context.insert(icon)
         selection = icon
+        renaming = icon.id
     }
 
     /// Names the entry after what it shows, falling back to a numbered default.
@@ -103,7 +114,13 @@ struct LibrarySidebar: View {
 }
 
 struct LibraryRow: View {
-    let icon: SavedIcon
+    @Bindable var icon: SavedIcon
+    var isRenaming = false
+    var endRename: () -> Void = {}
+
+    @FocusState private var nameFocused: Bool
+    /// Kept so an emptied field can fall back to the name the row had before.
+    @State private var previousName = ""
 
     var body: some View {
         HStack(spacing: 10) {
@@ -118,12 +135,37 @@ struct LibraryRow: View {
             .frame(width: 36, height: 28)
 
             VStack(alignment: .leading, spacing: 1) {
-                Text(icon.name).fontWeight(.medium).lineLimit(1)
+                if isRenaming {
+                    TextField(text: $icon.name) {
+                        Text("Name", comment: "Label of the field that renames a saved icon")
+                    }
+                    .textFieldStyle(.plain)
+                    .fontWeight(.medium)
+                    .focused($nameFocused)
+                    .onSubmit(finish)
+                    .onExitCommand(perform: finish)
+                    .onChange(of: nameFocused) { _, focused in
+                        if !focused { finish() }
+                    }
+                    .task {
+                        previousName = icon.name
+                        nameFocused = true
+                    }
+                } else {
+                    Text(icon.name).fontWeight(.medium).lineLimit(1)
+                }
                 Text(icon.sourceSummary).font(.caption).foregroundStyle(.secondary)
                     .lineLimit(1)
             }
         }
         .padding(.vertical, 2)
+    }
+
+    private func finish() {
+        if icon.name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            icon.name = previousName
+        }
+        endRename()
     }
 }
 

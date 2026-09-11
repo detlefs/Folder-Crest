@@ -315,3 +315,9 @@ extension SFFont {
         }
     }
 }
+
+#Preview {
+    InspectorPanel()
+        .environment(IconStudio())
+        .frame(width: 290, height: 600)
+}

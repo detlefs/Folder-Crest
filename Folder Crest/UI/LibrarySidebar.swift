@@ -126,3 +126,11 @@ struct LibraryRow: View {
         .padding(.vertical, 2)
     }
 }
+
+#Preview {
+    @Previewable @State var selection: SavedIcon?
+    LibrarySidebar(selection: $selection)
+        .environment(IconStudio())
+        .modelContainer(for: SavedIcon.self, inMemory: true)
+        .frame(width: 240, height: 600)
+}

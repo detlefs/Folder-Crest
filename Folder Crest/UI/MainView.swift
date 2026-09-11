@@ -97,3 +97,10 @@ struct AppearanceMenu: View {
         }
     }
 }
+
+#Preview {
+    MainView()
+        .environment(IconStudio())
+        .modelContainer(for: SavedIcon.self, inMemory: true)
+        .frame(width: 1000, height: 680)
+}

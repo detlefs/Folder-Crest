@@ -226,3 +226,9 @@ struct DestinationRow: View {
         studio.existingFolder = nil
     }
 }
+
+#Preview {
+    IconStage()
+        .environment(IconStudio())
+        .frame(width: 520, height: 640)
+}

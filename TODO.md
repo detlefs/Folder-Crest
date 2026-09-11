@@ -3,8 +3,8 @@
 Offene Punkte der Portierung. Der vollständige Plan, alle Messwerte und die
 Begründungen stehen in [PLAN.md](PLAN.md); hier steht nur, was noch zu tun ist.
 
-**Stand 2026-09-10:** Schritte 0–9, 11, 12 erledigt, 80 Testfälle grün. Offen
-ist Schritt 10 und das Drumherum.
+**Stand 2026-09-11:** Schritte 0–9, 11, 12 erledigt, 25 Unit- und 7 UI-Tests
+grün. Offen ist Schritt 10 und das Drumherum.
 
 Testlauf (muss Release sein, Debug ist hier 100× langsamer):
 
@@ -13,6 +13,18 @@ xcodebuild -project "Folder Crest.xcodeproj" -scheme "Folder Crest" \
   -configuration Release ENABLE_TESTABILITY=YES \
   -destination 'platform=macOS' test
 ```
+
+`ENABLE_TESTABILITY=YES` ist nicht optional: die Unit-Tests importieren das
+App-Modul mit `@testable`, und ohne Testbarkeit bricht im Release schon deren
+Build ab („unable to resolve Swift module dependency to a compatible module:
+'Folder_Crest'"). Das gilt auch, wenn nur die UI-Tests laufen sollen —
+xcodebuild baut beide Test-Targets.
+
+Dazu muss auf der Maschine der Developer Mode an sein, einmalig mit
+`sudo DevToolsSecurity -enable`. Fehlt er, verlangt macOS bei jedem
+Testhost-Start eine Passwortbestätigung per Dialog: der Lauf hängt ohne
+Ergebnis-Bundle, mit „Unable to obtain a task name port right" im Protokoll,
+die UI-Tests mit „Timed out while enabling automation mode".
 
 ---
 

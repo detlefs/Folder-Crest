@@ -3,9 +3,9 @@
 //  Folder Crest
 //
 //  What the library keeps: the *recipe*, not the finished 1024 px icon. That
-//  costs almost nothing to sync and lets an icon be re-rendered when a folder
-//  style changes. Only the dropped source image and a small thumbnail are
-//  stored as blobs.
+//  costs almost nothing to sync and lets an icon be re-rendered when the
+//  system's folder graphic changes. Only the dropped source image and a small
+//  thumbnail are stored as blobs.
 //
 //  Every property has a default value and none is unique, because that is what
 //  CloudKit requires of a SwiftData model. Enums are stored as their raw value
@@ -21,7 +21,6 @@ final class SavedIcon {
     var name: String = ""
     var createdAt: Date = Date.now
 
-    var styleRaw: Int = FolderStyle.default.rawValue
     var text: String = ""
     var scale: Double = 1.0
     var offsetX: Double = 0
@@ -36,7 +35,6 @@ final class SavedIcon {
 
     init(name: String = "", recipe: IconRecipe) {
         self.name = name
-        self.styleRaw = recipe.style.rawValue
         self.scale = recipe.scale
         self.offsetX = recipe.offset.x
         self.offsetY = recipe.offset.y
@@ -54,13 +52,11 @@ final class SavedIcon {
         }
     }
 
-    var style: FolderStyle { FolderStyle(rawValue: styleRaw) ?? .default }
     var fontWeight: SFFont { SFFont(rawValue: fontWeightRaw) ?? .default }
 
     /// Rebuilds the recipe this entry was saved from.
     var recipe: IconRecipe {
         var recipe = IconRecipe()
-        recipe.style = style
         recipe.scale = scale
         recipe.offset = CGPoint(x: offsetX, y: offsetY)
         recipe.fontWeight = fontWeight

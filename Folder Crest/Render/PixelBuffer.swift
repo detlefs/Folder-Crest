@@ -8,6 +8,7 @@
 //
 
 import Accelerate
+import AppKit
 import CoreGraphics
 import Foundation
 import ImageIO
@@ -138,18 +139,26 @@ extension PixelBuffer {
         return try buffer.createCGImage(format: Self.format)
     }
 
-    /// Loads one of the bundled macOS folder graphics.
-    static func folderImage(_ style: FolderStyle) throws -> PixelBuffer {
-        guard let url = Bundle.main.url(forResource: style.filename, withExtension: "png")
-                ?? Bundle.main.url(forResource: style.filename, withExtension: "png",
-                                   subdirectory: "Folders")
-        else { throw RenderError.resourceMissing("\(style.filename).png") }
-
-        guard let source = CGImageSourceCreateWithURL(url as CFURL, nil),
-              let image = CGImageSourceCreateImageAtIndex(source, 0, nil)
+    /// The folder graphic of the running system, at `FolderGraphic.size`.
+    ///
+    /// `NSImage` is asked for a representation of that size rather than drawn
+    /// into a context: the icon ships one at 1024 px, and taking it directly
+    /// avoids a premultiply/unpremultiply round trip along the soft edges.
+    static func folderImage() throws -> PixelBuffer {
+        let side = CGFloat(FolderGraphic.size)
+        var rect = NSRect(x: 0, y: 0, width: side, height: side)
+        guard let image = NSWorkspace.shared.icon(for: .folder)
+            .cgImage(forProposedRect: &rect, context: nil, hints: nil)
         else { throw RenderError.imageDecodingFailed }
 
-        return try PixelBuffer(cgImage: image)
+        let buffer = try PixelBuffer(cgImage: image)
+        guard buffer.width == FolderGraphic.size, buffer.height == FolderGraphic.size else {
+            // A system that hands back a differently sized icon would silently
+            // shift every calibrated percentage, so scale it back instead
+            return Resample.resize(buffer, width: FolderGraphic.size,
+                                   height: FolderGraphic.size, alphaWeighted: true)
+        }
+        return buffer
     }
 }
 

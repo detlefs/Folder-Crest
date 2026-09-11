@@ -21,8 +21,6 @@ struct MainView: View {
     @State private var selection: SavedIcon?
 
     var body: some View {
-        @Bindable var studio = studio
-
         NavigationSplitView {
             LibrarySidebar(selection: $selection)
                 .navigationSplitViewColumnWidth(min: 200, ideal: 240, max: 320)
@@ -34,17 +32,6 @@ struct MainView: View {
                 }
         }
         .toolbar {
-            ToolbarItem(placement: .principal) {
-                Picker(selection: $studio.style) {
-                    ForEach(FolderStyle.allCases, id: \.self) { style in
-                        Text(String(localized: style.displayNameKey)).tag(style)
-                    }
-                } label: {
-                    Text("Folder Style", comment: "Label of the folder style picker")
-                }
-                .pickerStyle(.menu)
-                .frame(minWidth: 200)
-            }
             ToolbarItem {
                 AppearanceMenu(appearance: $appearance)
             }

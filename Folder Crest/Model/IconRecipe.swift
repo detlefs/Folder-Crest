@@ -43,7 +43,6 @@ struct EngraveParameters: Hashable, Sendable {
 }
 
 struct IconRecipe: Hashable, Sendable {
-    var style = FolderStyle.default
     var source = IconSource.none
     var scale = 1.0
     /// Offset from the centre, as a fraction of the folder size.

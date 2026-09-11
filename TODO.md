@@ -66,12 +66,6 @@ Arbeitsverzeichnis.
 
 - [ ] **`.gitignore` anlegen**, bevor committet wird. Sonst landen
       `xcuserdata/`, `.DS_Store` und Build-Reste dauerhaft in der Historie.
-- [ ] **Entscheiden, was ins Repo gehört.** Zusammen 71 MB, die nach dem ersten
-      Commit nicht mehr leicht herauszubekommen sind:
-      - `Folder Crest/Resources/Fonts/` — 58 MB, neun SF-Pro-Rounded-Schnitte
-      - `Folder CrestTests/Fixtures/` — 13 MB, 27 Referenz-PNGs
-      Beide werden gebraucht (die Schriften zur Laufzeit, die Fixtures für die
-      Parity-Tests), aber ein bewusster Beschluss ist es wert.
 - [ ] **LICENSE ergänzen** — MIT, wie in den globalen Vorgaben festgelegt.
 - [ ] **README.md schreiben** (auf Englisch).
 - [ ] Erst danach committen.
@@ -81,15 +75,14 @@ Arbeitsverzeichnis.
 - [ ] **„Erweitert"-Tab im Inspector** für die Blur-Radien und Versätze der
       Gravur-Filterkette. `EngraveParameters` ist dafür schon ein eigener Wert
       im Rezept, der Renderer liest ausschliesslich daraus — es fehlen nur die
-      Regler. Die Parity-Tests fixieren `.default`, damit die Knöpfe die
-      Referenztreue nicht aufweichen. PLAN.md, Abschnitt 6.
+      Regler. PLAN.md, Abschnitt 6.
 - [ ] **UITests-Target entfernen.** Steht leer im Projekt. Bisher nicht
       angefasst, weil das Eingriffe in `project.pbxproj` bedeutet und ein
       ungenutzter Ordner weniger kostet als ein kaputtes Projekt.
-- [ ] **Mitgelieferte Schriften loswerden** (58 MB). Ersatz wäre
-      `/System/Library/Fonts/SFNSRounded.ttf`, immer im System vorhanden.
-      Bricht die Parity-Tests, weil sich die Metriken unterscheiden — eigenes
-      Thema, kein Teil der Portierung. Steht so auch im TODO der Referenz.
-- [ ] **Tahoe-Stil mit eigenen Farbwerten.** `FolderStyle.iconColour` übernimmt
-      für Catalina und Tahoe die Big-Sur-Werte, wie im Original. Ändern würde
-      die Fixtures ungültig machen.
+- [ ] **Kalibrierung nachziehen, wenn macOS den Ordner neu zeichnet.** Die
+      Werte in `FolderGraphic` sind am Systemsymbol von macOS 26 gemessen
+      (2026-09-11). Der Test „Die kalibrierten Zahlen beschreiben den
+      Systemordner noch" in `BoxBlurTests` schlägt an, sobald das nicht mehr
+      stimmt; neu messen lässt es sich mit demselben Verfahren
+      (Bounding-Box über Alpha > 8, Mittelfarbe über die Icon-Box, Gravurfarbe
+      aus der Differenz zu den Symbolen von Downloads/Dokumente/Programme).

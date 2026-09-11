@@ -98,28 +98,63 @@ struct BoxBlurTests {
 
 struct PixelBufferTests {
 
-    /// Decoding must produce the same bytes Pillow reads out of the PNG —
-    /// non-premultiplied sRGB, no colour management in between.
-    @Test("The bundled folder graphic decodes to the reference bytes")
-    func folderImageMatchesReference() throws {
-        let buffer = try PixelBuffer.folderImage(.tahoe)
+    /// The graphic comes from the system now, so its exact pixels are the
+    /// system's business. What must hold is the shape everything downstream is
+    /// calibrated against: the size, empty corners, an opaque blue front.
+    @Test("The system folder graphic arrives at the calibrated size")
+    func folderImageIsCalibratedSize() throws {
+        let buffer = try PixelBuffer.folderImage()
 
-        #expect(buffer.width == 1024)
-        #expect(buffer.height == 1024)
+        #expect(buffer.width == FolderGraphic.size)
+        #expect(buffer.height == FolderGraphic.size)
 
-        #expect(buffer[0, 0] == RGBA(0, 0, 0, 0))
-        #expect(buffer[512, 512] == RGBA(118, 210, 251, 255))
-        #expect(buffer[512, 300] == RGBA(106, 203, 248, 255))
-        #expect(buffer[100, 600] == RGBA(115, 210, 251, 255))
-        #expect(buffer[1023, 1023] == RGBA(0, 0, 0, 0))
-        #expect(buffer[512, 900] == RGBA(0, 0, 0, 18))
+        #expect(buffer[0, 0].alpha == 0)
+        #expect(buffer[FolderGraphic.size - 1, FolderGraphic.size - 1].alpha == 0)
+
+        let centre = buffer[512, 512]
+        #expect(centre.alpha == 255)
+        #expect(centre.blue > centre.red)
     }
 
-    @Test("Every folder style is bundled and square", arguments: FolderStyle.allCases)
-    func everyStyleLoads(style: FolderStyle) throws {
-        let buffer = try PixelBuffer.folderImage(style)
-        #expect(buffer.width == style.size)
-        #expect(buffer.height == style.size)
+    /// The calibration is measured, so a macOS release that redraws the folder
+    /// has to move these numbers with it. This is the tripwire for that: it
+    /// compares the constants against the graphic actually installed.
+    @Test("The calibrated numbers still describe the system folder")
+    func calibrationMatchesTheSystemFolder() throws {
+        let buffer = try PixelBuffer.folderImage()
+        let size = FolderGraphic.size
+
+        var top = size, bottom = -1
+        var red = 0, green = 0, blue = 0, opaque = 0
+        let box = FolderGraphic.iconBoxPercentages
+
+        for y in 0..<size {
+            for x in 0..<size {
+                let pixel = buffer[x, y]
+                guard pixel.alpha > 8 else { continue }
+                top = min(top, y)
+                bottom = max(bottom, y)
+
+                guard pixel.alpha == 255,
+                      Double(x) / Double(size) > box.x1, Double(x) / Double(size) < box.x2,
+                      Double(y) / Double(size) > box.y1, Double(y) / Double(size) < box.y2
+                else { continue }
+                red += Int(pixel.red); green += Int(pixel.green); blue += Int(pixel.blue)
+                opaque += 1
+            }
+        }
+
+        try #require(opaque > 0)
+        let mean = RGB(red / opaque, green / opaque, blue / opaque)
+        // Ten units of slack: the mean is dominated by the flat front, so a
+        // redrawn folder moves it much further than a nudged gradient does
+        #expect(abs(mean.red - FolderGraphic.baseColour.red) <= 10)
+        #expect(abs(mean.green - FolderGraphic.baseColour.green) <= 10)
+        #expect(abs(mean.blue - FolderGraphic.baseColour.blue) <= 10)
+
+        let crop = FolderGraphic.previewCropPercentages
+        #expect(abs(Double(top) / Double(size) - crop.y1) <= 0.01)
+        #expect(abs(Double(bottom + 1) / Double(size) - crop.y2) <= 0.01)
     }
 
     @Test func cgImageRoundTripKeepsBytes() throws {

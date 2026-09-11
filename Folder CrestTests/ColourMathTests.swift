@@ -3,7 +3,10 @@
 //  Folder CrestTests
 //
 //  Expected values were produced by the Python reference implementation, not
-//  re-derived here — these tests exist to catch drift away from it.
+//  re-derived here — these tests exist to catch drift away from it. The two
+//  folder colours are the exception: they are measured off the system's own
+//  folder icon, so their expected values come from `colorsys` run over the
+//  measured pair rather than from a fixture.
 //
 
 import Testing
@@ -11,26 +14,16 @@ import Testing
 
 struct ColourMathTests {
 
-    @Test("dividedColour matches the reference for every folder style",
-          arguments: [
-            (FolderStyle.bigSurLight, RGB(138, 208, 232)),
-            (FolderStyle.bigSurDark,  RGB(140, 196, 225)),
-            (FolderStyle.catalina,    RGB(133, 206, 232)),
-            (FolderStyle.tahoe,       RGB(133, 206, 232)),
-          ])
-    func centreColour(style: FolderStyle, expected: RGB) {
-        #expect(dividedColour(style.baseColour, style.iconColour) == expected)
+    @Test("dividedColour turns the folder's two colours into the engraving colour")
+    func centreColour() {
+        #expect(dividedColour(FolderGraphic.baseColour, FolderGraphic.iconColour)
+                == RGB(222, 219, 220))
     }
 
-    @Test("The inner shadow colour is the centre colour at 90 % value",
-          arguments: [
-            (FolderStyle.bigSurLight, RGB(124, 187, 208)),
-            (FolderStyle.bigSurDark,  RGB(125, 176, 202)),
-            (FolderStyle.catalina,    RGB(119, 185, 208)),
-            (FolderStyle.tahoe,       RGB(119, 185, 208)),
-          ])
-    func shadowColour(style: FolderStyle, expected: RGB) {
-        let centre = dividedColour(style.baseColour, style.iconColour)
+    @Test("The inner shadow colour is the centre colour at 90 % value")
+    func shadowColour() {
+        let expected = RGB(199, 197, 198)
+        let centre = dividedColour(FolderGraphic.baseColour, FolderGraphic.iconColour)
         let hsv = rgbIntToHSV(centre)
         let shadow = HSV(hsv.hue, hsv.saturation,
                          hsv.value * Constants.innerShadowColourScalingFactor)

@@ -26,22 +26,21 @@ enum IconRenderer {
         struct Cancelled: Error {}
         func checkpoint() throws { if isCancelled() { throw Cancelled() } }
 
-        let style = recipe.style
-        let size = style.size
+        let size = FolderGraphic.size
         let parameters = recipe.engrave
 
-        var folder = try PixelBuffer.folderImage(style)
+        var folder = try PixelBuffer.folderImage()
         increaseShadow(&folder, factor: parameters.folderShadowFactor)
         try checkpoint()
 
         // Nothing to draw on top
         guard recipe.source.method != .none else {
-            return tinted(folder, style: style, tint: recipe.tint)
+            return tinted(folder, tint: recipe.tint)
         }
 
         // Where the icon goes. The offset shifts the paste, not the box, so
         // moving the icon around never changes its size.
-        let box = iconBox(style: style, scale: recipe.scale * parameters.iconBoxScale)
+        let box = iconBox(scale: recipe.scale * parameters.iconBoxScale)
         let offset = (x: Int(Double(size) * recipe.offset.x),
                       y: Int(Double(size) * recipe.offset.y))
         try checkpoint()
@@ -49,7 +48,7 @@ enum IconRenderer {
         // An image kept in its own colours is pasted on top, not engraved
         if case .image(let image, preserveColours: true) = recipe.source {
             return compositeOriginalColours(folder: folder, image: image, box: box,
-                                            offset: offset, style: style, tint: recipe.tint)
+                                            offset: offset, tint: recipe.tint)
         }
 
         // Emoji have no glyphs in SF Pro Rounded and bring their own colours,
@@ -57,12 +56,12 @@ enum IconRenderer {
         if case .text(let text) = recipe.source, let emoji = GlyphRenderer.colourEmoji(text) {
             try checkpoint()
             return compositeOriginalColours(folder: folder, image: emoji, box: box,
-                                            offset: offset, style: style, tint: recipe.tint)
+                                            offset: offset, tint: recipe.tint)
         }
         try checkpoint()
 
         guard let mask = maskImage(for: recipe) else {
-            return tinted(folder, style: style, tint: recipe.tint)
+            return tinted(folder, tint: recipe.tint)
         }
         try checkpoint()
 
@@ -70,16 +69,14 @@ enum IconRenderer {
         try checkpoint()
 
         let engraved = try engrave(folder: folder, mask: formattedMask,
-                                   style: style, parameters: parameters,
-                                   checkpoint: checkpoint)
-        return tinted(engraved, style: style, tint: recipe.tint)
+                                   parameters: parameters, checkpoint: checkpoint)
+        return tinted(engraved, tint: recipe.tint)
     }
 
-    private static func tinted(_ buffer: PixelBuffer, style: FolderStyle,
-                               tint: RGB?) -> PixelBuffer {
+    private static func tinted(_ buffer: PixelBuffer, tint: RGB?) -> PixelBuffer {
         guard let tint else { return buffer }
         var result = buffer
-        TintCube.apply(to: &result, base: style.baseColour, tint: tint)
+        TintCube.apply(to: &result, base: FolderGraphic.baseColour, tint: tint)
         return result
     }
 
@@ -87,9 +84,9 @@ enum IconRenderer {
     /// applied to the folder *first*, so it does not recolour the pasted image.
     private static func compositeOriginalColours(
         folder: PixelBuffer, image: PixelBuffer, box: Box,
-        offset: (x: Int, y: Int), style: FolderStyle, tint: RGB?) -> PixelBuffer {
+        offset: (x: Int, y: Int), tint: RGB?) -> PixelBuffer {
 
-        var result = tinted(folder, style: style, tint: tint)
+        var result = tinted(folder, tint: tint)
 
         let ratio = min(box.width / Double(image.width), box.height / Double(image.height))
         let scaled = Resample.resize(image,
@@ -125,9 +122,9 @@ enum IconRenderer {
     }
 
     /// The box the icon is fitted into, scaled from its centre.
-    private static func iconBox(style: FolderStyle, scale: Double) -> Box {
-        let size = Double(style.size)
-        let percentages = style.iconBoxPercentages
+    private static func iconBox(scale: Double) -> Box {
+        let size = Double(FolderGraphic.size)
+        let percentages = FolderGraphic.iconBoxPercentages
         let box = Box(Double(Int(size * percentages.x1)), Double(Int(size * percentages.y1)),
                       Double(Int(size * percentages.x2)), Double(Int(size * percentages.y2)))
 
@@ -152,7 +149,7 @@ enum IconRenderer {
         case .none:
             nil
         case .text(let text):
-            GlyphRenderer.mask(text: text, imageSize: recipe.style.size,
+            GlyphRenderer.mask(text: text, imageSize: FolderGraphic.size,
                                weight: recipe.fontWeight)
         case .image(let image, _):
             ImageMask.mask(from: image)
@@ -199,12 +196,12 @@ enum IconRenderer {
     /// Builds the inner shadow and outer highlight layers and combines them
     /// with the folder.
     private static func engrave(folder: PixelBuffer, mask: PixelBuffer,
-                                style: FolderStyle, parameters: EngraveParameters,
+                                parameters: EngraveParameters,
                                 checkpoint: () throws -> Void) throws -> PixelBuffer {
         let size = folder.width
 
         // The colour that, multiplied over the folder, yields the icon colour
-        let centre = dividedColour(style.baseColour, style.iconColour)
+        let centre = dividedColour(FolderGraphic.baseColour, FolderGraphic.iconColour)
         let centreHSV = rgbIntToHSV(centre)
         let shadowColour = hsvToRGBInt(HSV(centreHSV.hue, centreHSV.saturation,
                                            centreHSV.value * parameters.innerShadowValueScale))

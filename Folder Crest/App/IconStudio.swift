@@ -22,7 +22,6 @@ final class IconStudio {
 
     // MARK: - Recipe inputs
 
-    var style = FolderStyle.default { didSet { scheduleRender() } }
     var text = "" { didSet { textChanged() } }
     var preserveColours = false { didSet { scheduleRender() } }
     var fontWeight = SFFont.default { didSet { scheduleRender() } }
@@ -89,7 +88,7 @@ final class IconStudio {
     }
 
     var recipe: IconRecipe {
-        IconRecipe(style: style, source: source, scale: scale, offset: offset,
+        IconRecipe(source: source, scale: scale, offset: offset,
                    tint: tint, fontWeight: fontWeight)
     }
 
@@ -128,7 +127,6 @@ final class IconStudio {
     }
 
     func reset() {
-        style = .default
         text = ""
         droppedImage = nil
         preserveColours = false
@@ -143,7 +141,6 @@ final class IconStudio {
 
     func load(_ saved: SavedIcon) {
         let recipe = saved.recipe
-        style = recipe.style
         scaleTick = Self.tick(forScale: recipe.scale)
         fontWeight = recipe.fontWeight
         tint = recipe.tint
@@ -200,7 +197,7 @@ final class IconStudio {
         isRendering = true
 
         let recipe = self.recipe
-        let cropBox = style.previewCropPercentages
+        let cropBox = FolderGraphic.previewCropPercentages
         let source = self.source
 
         renderTask = Task.detached(priority: .userInitiated) { [weak self] in
@@ -235,7 +232,7 @@ final class IconStudio {
             return try? buffer.cgImage()
         case .text(let text):
             if let emoji = GlyphRenderer.colourEmoji(text) { return try? emoji.cgImage() }
-            guard var mask = GlyphRenderer.mask(text: text, imageSize: recipe.style.size,
+            guard var mask = GlyphRenderer.mask(text: text, imageSize: FolderGraphic.size,
                                                 weight: recipe.fontWeight) else { return nil }
             // The mask is white on black; show it as a solid shape instead
             for i in stride(from: 0, to: mask.pixels.count, by: PixelBuffer.bytesPerPixel) {
@@ -285,7 +282,7 @@ final class IconStudio {
     func thumbnailData() async -> Data? {
         await renderTask?.value
         guard let rendered else { return nil }
-        return Resample.resize(rendered.cropped(to: style.previewCropPercentages),
+        return Resample.resize(rendered.cropped(to: FolderGraphic.previewCropPercentages),
                                width: 256, height: 256, alphaWeighted: true).pngData()
     }
 }

@@ -7,6 +7,26 @@ Ziel-Toolchain: Xcode 26.5, Swift 6.3, Deployment Target macOS 26.0, arm64.
 
 ---
 
+## Nachtrag, 2026-09-11
+
+Zwei Entscheidungen nach Abschluss der Portierung heben Teile dieses Plans auf:
+
+* Die Schrift kommt aus dem System (`NSFont` mit `.rounded`-Design) statt aus
+  neun mitgelieferten SF-Pro-Rounded-Dateien.
+* Die Ordnergrafik kommt aus dem System (`NSWorkspace.icon(for: .folder)`)
+  statt aus vier mitgelieferten PNGs. Damit gibt es nur noch *einen* Ordner,
+  den des laufenden macOS — das Stil-Dropdown ist entfallen, `FolderStyle`
+  wurde durch die gemessenen Konstanten in `FolderGraphic` ersetzt.
+
+Der Pixelvergleich gegen die Python-Referenz (Abschnitt 7, `ParityTests`,
+`Fixtures/`, `make_fixtures.py`) ist damit hinfällig: die Referenz graviert eine
+andere Ordnergrafik, jede Fixture verglich danach zwei verschiedene Ordner.
+An seiner Stelle stehen `RenderTests` (Verhalten der Pipeline) und die
+weiterhin pixelgenauen Tests der Arithmetik darunter. Alles Folgende in diesem
+Dokument beschreibt den Stand davor.
+
+---
+
 ## 0. Was ich in der Referenz gefunden habe
 
 Die Pipeline in `imagetransformations.generate_folder_icon` ist in Wahrheit

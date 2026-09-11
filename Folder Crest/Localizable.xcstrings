@@ -161,17 +161,6 @@
         }
       }
     },
-    "Folder Style": {
-      "comment": "Label of the folder style picker",
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ordnerstil"
-          }
-        }
-      }
-    },
     "Folder icon preview": {
       "comment": "Accessibility label of the large preview",
       "localizations": {
@@ -657,46 +646,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Gelb"
-          }
-        }
-      }
-    },
-    "macOS Big Sur – Dark mode": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS Big Sur – Dunkel"
-          }
-        }
-      }
-    },
-    "macOS Big Sur – Light mode": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS Big Sur – Hell"
-          }
-        }
-      }
-    },
-    "macOS Catalina": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS Catalina"
-          }
-        }
-      }
-    },
-    "macOS Tahoe": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "macOS Tahoe"
           }
         }
       }

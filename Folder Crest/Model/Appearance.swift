@@ -9,9 +9,8 @@
 //  menu bar, the open panel and the about window in the system mode — a break
 //  you see immediately.
 //
-//  Note that this has nothing to do with `FolderStyle.bigSurLight` and
-//  `.bigSurDark`. Those are two different folder *graphics*; you may well want
-//  to build a light folder icon in a dark window.
+//  Note that this has nothing to do with the folder graphic: that one comes
+//  from the system and looks the same in either mode.
 //
 
 import AppKit

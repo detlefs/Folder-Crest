@@ -12,6 +12,17 @@
         }
       }
     },
+    "About Folder Crest": {
+      "comment": "Application menu entry that opens the about panel",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Über Folder Crest"
+          }
+        }
+      }
+    },
     "Appearance": {
       "comment": "Label of the light/dark mode picker",
       "localizations": {
@@ -432,6 +443,17 @@
           "stringUnit": {
             "state": "translated",
             "value": "Normal"
+          }
+        }
+      }
+    },
+    "Released under the MIT License.": {
+      "comment": "Licence line in the about panel",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veröffentlicht unter der MIT-Lizenz."
           }
         }
       }

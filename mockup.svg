@@ -1,0 +1,307 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="800" viewBox="0 0 1240 800" font-family="-apple-system, Helvetica, Arial, sans-serif">
+  <defs>
+    <style>
+      .win   { fill:#f2f2f4; stroke:#c8c8cc; }
+      .panel { fill:#e9e9ec; stroke:#d5d5d9; }
+      .card  { fill:#ffffff; stroke:#dcdce0; }
+      .lbl   { font-size:12px; fill:#3c3c43; }
+      .dim   { font-size:11px; fill:#8a8a8e; }
+      .hdr   { font-size:11px; fill:#8a8a8e; letter-spacing:.6px; }
+      .ttl   { font-size:13px; fill:#1c1c1e; font-weight:600; }
+      .btn   { fill:#ffffff; stroke:#c4c4c8; }
+      .prim  { fill:#007aff; stroke:none; }
+      .track { fill:#d3d3d8; }
+      .fill  { fill:#007aff; }
+      .knob  { fill:#ffffff; stroke:#b0b0b6; }
+      .note  { font-size:11px; fill:#c0392b; font-style:italic; }
+      .dash  { fill:none; stroke:#a0a0a6; stroke-dasharray:5 4; }
+    </style>
+    <linearGradient id="fold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8ed8fb"/><stop offset="1" stop-color="#5cb8ee"/>
+    </linearGradient>
+    <linearGradient id="tab" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a5e2fc"/><stop offset="1" stop-color="#8ed8fb"/>
+    </linearGradient>
+  </defs>
+
+  <!-- window -->
+  <rect class="win" x="10" y="10" width="1220" height="780" rx="12"/>
+
+  <!-- ================= toolbar ================= -->
+  <path class="panel" d="M10 22 a12 12 0 0 1 12-12 h1196 a12 12 0 0 1 12 12 v42 h-1220 z"/>
+  <line x1="10" y1="64" x2="1230" y2="64" stroke="#d5d5d9"/>
+  <circle cx="34" cy="37" r="6" fill="#ff5f57"/><circle cx="54" cy="37" r="6" fill="#febc2e"/><circle cx="74" cy="37" r="6" fill="#28c840"/>
+
+  <!-- sidebar toggle -->
+  <rect class="btn" x="104" y="25" width="30" height="24" rx="5"/>
+  <rect x="111" y="31" width="16" height="12" rx="2" fill="none" stroke="#4a4a4f"/>
+  <line x1="117" y1="31" x2="117" y2="43" stroke="#4a4a4f"/>
+
+  <!-- style picker -->
+  <text class="lbl" x="152" y="42">Folder Style</text>
+  <rect class="btn" x="230" y="25" width="196" height="24" rx="5"/>
+  <text class="lbl" x="242" y="42">macOS Tahoe</text>
+  <path d="M408 37 l5 -5 l5 5 M408 43 l5 5 l5 -5" fill="none" stroke="#6a6a70"/>
+
+  <!-- appearance menu: sun / moon / auto -->
+  <rect class="btn" x="1128" y="25" width="42" height="24" rx="5"/>
+  <circle cx="1141" cy="37" r="5" fill="none" stroke="#4a4a4f"/>
+  <g stroke="#4a4a4f" stroke-linecap="round">
+    <line x1="1141" y1="28" x2="1141" y2="30"/><line x1="1141" y1="44" x2="1141" y2="46"/>
+    <line x1="1132" y1="37" x2="1134" y2="37"/><line x1="1148" y1="37" x2="1150" y2="37"/>
+    <line x1="1135" y1="31" x2="1136" y2="32"/><line x1="1146" y1="42" x2="1147" y2="43"/>
+    <line x1="1135" y1="43" x2="1136" y2="42"/><line x1="1146" y1="32" x2="1147" y2="31"/>
+  </g>
+  <path d="M1158 34 l4 3 l-4 3" fill="none" stroke="#6a6a70"/>
+
+  <!-- inspector toggle -->
+  <rect class="btn" x="1180" y="25" width="30" height="24" rx="5"/>
+  <rect x="1187" y="31" width="16" height="12" rx="2" fill="none" stroke="#4a4a4f"/>
+  <line x1="1197" y1="31" x2="1197" y2="43" stroke="#4a4a4f"/>
+
+  <!-- ================= sidebar: saved icons ================= -->
+  <rect class="panel" x="10" y="64" width="244" height="726"/>
+  <text class="hdr" x="28" y="92">MY ICONS</text>
+
+  <g id="library">
+    <!-- item 1 (selected) -->
+    <rect x="20" y="104" width="224" height="52" rx="7" fill="#007aff" opacity="0.14"/>
+    <g transform="translate(32,114) scale(0.30)">
+      <path d="M8 44 v-14 a6 6 0 0 1 6 -6 h28 a4 4 0 0 1 4 2 l8 12 z" fill="url(#tab)"/>
+      <rect x="8" y="40" width="108" height="66" rx="10" fill="url(#fold)"/>
+      <text x="62" y="86" font-size="42" font-weight="700" fill="#46a8dd" text-anchor="middle">A</text>
+    </g>
+    <text class="ttl" x="84" y="128">Archive 2026</text>
+    <text class="dim" x="84" y="145">Text · Tahoe</text>
+
+    <!-- item 2 -->
+    <g transform="translate(32,166) scale(0.30)">
+      <path d="M8 44 v-14 a6 6 0 0 1 6 -6 h28 a4 4 0 0 1 4 2 l8 12 z" fill="#e3b7a0"/>
+      <rect x="8" y="40" width="108" height="66" rx="10" fill="#d79f84"/>
+      <text x="62" y="86" font-size="38" text-anchor="middle">📸</text>
+    </g>
+    <text class="ttl" x="84" y="180">Photos</text>
+    <text class="dim" x="84" y="197">Emoji · Tahoe · Orange</text>
+
+    <!-- item 3 -->
+    <g transform="translate(32,218) scale(0.30)">
+      <path d="M8 44 v-14 a6 6 0 0 1 6 -6 h28 a4 4 0 0 1 4 2 l8 12 z" fill="#a9c6b3"/>
+      <rect x="8" y="40" width="108" height="66" rx="10" fill="#8fb49d"/>
+      <circle cx="62" cy="74" r="20" fill="none" stroke="#5e8a6e" stroke-width="7"/>
+    </g>
+    <text class="ttl" x="84" y="232">Finances</text>
+    <text class="dim" x="84" y="249">SF Symbol · Green</text>
+
+    <!-- item 4 -->
+    <g transform="translate(32,270) scale(0.30)">
+      <path d="M8 44 v-14 a6 6 0 0 1 6 -6 h28 a4 4 0 0 1 4 2 l8 12 z" fill="#b9bcd2"/>
+      <rect x="8" y="40" width="108" height="66" rx="10" fill="#9fa3c0"/>
+      <rect x="42" y="56" width="40" height="34" rx="5" fill="#6f74a0"/>
+    </g>
+    <text class="ttl" x="84" y="284">Projects</text>
+    <text class="dim" x="84" y="301">Image · Original Colors</text>
+  </g>
+
+  <!-- sidebar bottom bar: the library actions live where the library is -->
+  <line x1="10" y1="740" x2="254" y2="740" stroke="#d5d5d9"/>
+  <rect class="btn" x="24" y="750" width="30" height="24" rx="5"/>
+  <g stroke="#3c3c43" stroke-linecap="round" stroke-width="1.6">
+    <line x1="33" y1="762" x2="45" y2="762"/><line x1="39" y1="756" x2="39" y2="768"/>
+  </g>
+  <rect class="btn" x="58" y="750" width="30" height="24" rx="5"/>
+  <line x1="67" y1="762" x2="79" y2="762" stroke="#3c3c43" stroke-linecap="round" stroke-width="1.6"/>
+  <path d="M112 770 a8 8 0 0 1 0 -12 a10 10 0 0 1 19 -3 a7 7 0 0 1 2 15 z" fill="none" stroke="#8a8a8e"/>
+  <text class="dim" x="148" y="770">Synced</text>
+
+  <!-- ================= centre ================= -->
+  <line x1="254" y1="64" x2="254" y2="790" stroke="#d5d5d9"/>
+
+  <!-- big folder icon, drop target -->
+  <rect class="dash" x="290" y="96" width="626" height="400" rx="14"/>
+  <g transform="translate(438,142)">
+    <path d="M12 118 v-40 a16 16 0 0 1 16 -16 h82 a12 12 0 0 1 10 6 l22 34 z" fill="url(#tab)"/>
+    <rect x="12" y="96" width="314" height="208" rx="26" fill="url(#fold)"/>
+    <!-- engraved letter: darker fill + light bottom edge -->
+    <text x="169" y="252" font-size="128" font-weight="800" fill="#4aa9de" text-anchor="middle">A</text>
+    <text x="169" y="255" font-size="128" font-weight="800" fill="#9adcfb" text-anchor="middle" opacity="0.45">A</text>
+  </g>
+  <text class="dim" x="603" y="474" text-anchor="middle">Drag an SF Symbol, image, or folder here</text>
+
+  <!-- source strip -->
+  <text class="hdr" x="290" y="540">SOURCE</text>
+  <rect class="card" x="290" y="552" width="112" height="112" rx="10"/>
+  <text x="346" y="626" font-size="62" font-weight="800" fill="#3c3c43" text-anchor="middle">A</text>
+  <text class="dim" x="346" y="682" text-anchor="middle">Text</text>
+
+  <text class="lbl" x="424" y="580">Text or Emoji</text>
+  <rect class="card" x="424" y="592" width="492" height="30" rx="6"/>
+  <text class="lbl" x="670" y="612" text-anchor="middle">A</text>
+  <text class="dim" x="424" y="644">Up to 25 characters. A drop replaces the text.</text>
+  <rect class="btn" x="424" y="660" width="132" height="26" rx="5"/>
+  <text class="lbl" x="490" y="678" text-anchor="middle">Clear Source</text>
+
+  <!-- output location -->
+  <line x1="290" y1="712" x2="916" y2="712" stroke="#dcdce0"/>
+  <text class="lbl" x="290" y="746">New folder in</text>
+  <text class="ttl" x="392" y="746">Desktop</text>
+  <rect class="btn" x="480" y="730" width="86" height="22" rx="5"/>
+  <text class="dim" x="523" y="745" text-anchor="middle">Change …</text>
+
+  <rect class="btn" x="640" y="728" width="86" height="26" rx="5"/>
+  <text class="lbl" x="683" y="745" text-anchor="middle">Reset All</text>
+  <rect class="prim" x="738" y="728" width="178" height="26" rx="5"/>
+  <text x="827" y="745" font-size="12" fill="#ffffff" text-anchor="middle">Apply to Folder</text>
+  <text class="dim" x="290" y="778">A dropped folder replaces the target and gets its icon set directly.</text>
+
+  <!-- ================= inspector ================= -->
+  <line x1="948" y1="64" x2="948" y2="790" stroke="#d5d5d9"/>
+  <rect class="panel" x="948" y="64" width="282" height="726"/>
+
+  <!-- tabs -->
+  <rect x="964" y="82" width="250" height="26" rx="6" fill="#dededf"/>
+  <rect x="966" y="84" width="123" height="22" rx="5" fill="#ffffff" stroke="#cfcfd3"/>
+  <text class="lbl" x="1027" y="99" text-anchor="middle">Icon</text>
+  <text class="dim" x="1151" y="99" text-anchor="middle">Folder Color</text>
+
+  <!-- size -->
+  <text class="lbl" x="964" y="142">Size</text>
+  <text class="dim" x="1214" y="142" text-anchor="end">100 %</text>
+  <rect class="track" x="964" y="152" width="250" height="4" rx="2"/>
+  <rect class="fill" x="964" y="152" width="125" height="4" rx="2"/>
+  <circle class="knob" cx="1089" cy="154" r="8"/>
+  <line x1="1089" y1="162" x2="1089" y2="168" stroke="#b0b0b6"/>
+
+  <!-- horizontal -->
+  <text class="lbl" x="964" y="204">Horizontal Offset</text>
+  <text class="dim" x="1214" y="204" text-anchor="end">0</text>
+  <rect class="track" x="964" y="214" width="250" height="4" rx="2"/>
+  <circle class="knob" cx="1089" cy="216" r="8"/>
+  <line x1="1089" y1="224" x2="1089" y2="230" stroke="#b0b0b6"/>
+
+  <!-- vertical -->
+  <text class="lbl" x="964" y="266">Vertical Offset</text>
+  <text class="dim" x="1214" y="266" text-anchor="end">0</text>
+  <rect class="track" x="964" y="276" width="250" height="4" rx="2"/>
+  <circle class="knob" cx="1089" cy="278" r="8"/>
+  <line x1="1089" y1="286" x2="1089" y2="292" stroke="#b0b0b6"/>
+
+  <!-- weight -->
+  <text class="lbl" x="964" y="328">Text Weight</text>
+  <text class="dim" x="1214" y="328" text-anchor="end">Bold</text>
+  <rect class="track" x="964" y="338" width="250" height="4" rx="2"/>
+  <rect class="fill" x="964" y="338" width="167" height="4" rx="2"/>
+  <circle class="knob" cx="1131" cy="340" r="8"/>
+  <g stroke="#c0c0c6">
+    <line x1="964" y1="346" x2="964" y2="351"/><line x1="995" y1="346" x2="995" y2="351"/>
+    <line x1="1026" y1="346" x2="1026" y2="351"/><line x1="1057" y1="346" x2="1057" y2="351"/>
+    <line x1="1088" y1="346" x2="1088" y2="351"/><line x1="1119" y1="346" x2="1119" y2="351"/>
+    <line x1="1150" y1="346" x2="1150" y2="351"/><line x1="1181" y1="346" x2="1181" y2="351"/>
+    <line x1="1212" y1="346" x2="1212" y2="351"/>
+  </g>
+
+  <!-- appearance -->
+  <line x1="964" y1="388" x2="1214" y2="388" stroke="#dcdce0"/>
+  <text class="hdr" x="964" y="414">RENDERING</text>
+
+  <rect x="964" y="428" width="250" height="30" rx="6" fill="#dededf"/>
+  <rect x="966" y="430" width="123" height="26" rx="5" fill="#ffffff" stroke="#cfcfd3"/>
+  <text class="lbl" x="1027" y="447" text-anchor="middle">Engraved</text>
+  <text class="dim" x="1151" y="447" text-anchor="middle">Original Colors</text>
+  <text class="dim" x="964" y="476">Original colors apply only to dropped images</text>
+  <text class="dim" x="964" y="492">and multicolor symbols.</text>
+
+  <!-- advanced, planned -->
+  <line x1="964" y1="524" x2="1214" y2="524" stroke="#dcdce0"/>
+  <path d="M968 546 l5 5 l-5 5" fill="none" stroke="#6a6a70"/>
+  <text class="lbl" x="984" y="555">Advanced</text>
+  <text class="note" x="984" y="574">planned: blur radii and offsets</text>
+  <text class="note" x="984" y="589">of the engraving filter chain</text>
+
+  <!-- colour tab preview (second tab, shown as callout) -->
+  <line x1="964" y1="620" x2="1214" y2="620" stroke="#dcdce0"/>
+  <text class="hdr" x="964" y="646">TAB “FOLDER COLOR”</text>
+  <g>
+    <circle cx="978" cy="676" r="13" fill="#ffffff" stroke="#c4c4c8"/>
+    <line x1="970" y1="684" x2="986" y2="668" stroke="#c0392b"/>
+    <circle cx="1012" cy="676" r="13" fill="#c3767c"/>
+    <circle cx="1046" cy="676" r="13" fill="#c38c88"/>
+    <circle cx="1080" cy="676" r="13" fill="#c3a794"/>
+    <circle cx="1114" cy="676" r="13" fill="#c3b5a0"/>
+    <circle cx="1148" cy="676" r="13" fill="#adb89c"/>
+    <circle cx="1182" cy="676" r="13" fill="#8bb3a5"/>
+    <circle cx="978" cy="710" r="13" fill="#8bafbb"/>
+    <circle cx="1012" cy="710" r="13" fill="#989eb3"/>
+    <circle cx="1046" cy="710" r="13" fill="#c3c0b8"/>
+    <circle cx="1080" cy="710" r="13" fill="#e1e0dd"/>
+    <circle cx="1080" cy="710" r="16" fill="none" stroke="#007aff" stroke-width="2"/>
+    <g id="rainbow">
+      <path d="M1114 710 L1127.00 710.00 A13 13 0 0 0 1126.89 708.30 Z" fill="rgb(255,52,38)"/>
+      <path d="M1114 710 L1126.89 708.30 A13 13 0 0 0 1126.56 706.64 Z" fill="rgb(255,79,38)"/>
+      <path d="M1114 710 L1126.56 706.64 A13 13 0 0 0 1126.01 705.03 Z" fill="rgb(255,106,38)"/>
+      <path d="M1114 710 L1126.01 705.03 A13 13 0 0 0 1125.26 703.50 Z" fill="rgb(255,133,38)"/>
+      <path d="M1114 710 L1125.26 703.50 A13 13 0 0 0 1124.31 702.09 Z" fill="rgb(255,160,38)"/>
+      <path d="M1114 710 L1124.31 702.09 A13 13 0 0 0 1123.19 700.81 Z" fill="rgb(255,187,38)"/>
+      <path d="M1114 710 L1123.19 700.81 A13 13 0 0 0 1121.91 699.69 Z" fill="rgb(255,214,38)"/>
+      <path d="M1114 710 L1121.91 699.69 A13 13 0 0 0 1120.50 698.74 Z" fill="rgb(255,241,38)"/>
+      <path d="M1114 710 L1120.50 698.74 A13 13 0 0 0 1118.97 697.99 Z" fill="rgb(241,255,38)"/>
+      <path d="M1114 710 L1118.97 697.99 A13 13 0 0 0 1117.36 697.44 Z" fill="rgb(214,255,38)"/>
+      <path d="M1114 710 L1117.36 697.44 A13 13 0 0 0 1115.70 697.11 Z" fill="rgb(187,255,38)"/>
+      <path d="M1114 710 L1115.70 697.11 A13 13 0 0 0 1114.00 697.00 Z" fill="rgb(160,255,38)"/>
+      <path d="M1114 710 L1114.00 697.00 A13 13 0 0 0 1112.30 697.11 Z" fill="rgb(133,255,38)"/>
+      <path d="M1114 710 L1112.30 697.11 A13 13 0 0 0 1110.64 697.44 Z" fill="rgb(106,255,38)"/>
+      <path d="M1114 710 L1110.64 697.44 A13 13 0 0 0 1109.03 697.99 Z" fill="rgb(79,255,38)"/>
+      <path d="M1114 710 L1109.03 697.99 A13 13 0 0 0 1107.50 698.74 Z" fill="rgb(52,255,38)"/>
+      <path d="M1114 710 L1107.50 698.74 A13 13 0 0 0 1106.09 699.69 Z" fill="rgb(38,255,52)"/>
+      <path d="M1114 710 L1106.09 699.69 A13 13 0 0 0 1104.81 700.81 Z" fill="rgb(38,255,79)"/>
+      <path d="M1114 710 L1104.81 700.81 A13 13 0 0 0 1103.69 702.09 Z" fill="rgb(38,255,106)"/>
+      <path d="M1114 710 L1103.69 702.09 A13 13 0 0 0 1102.74 703.50 Z" fill="rgb(38,255,133)"/>
+      <path d="M1114 710 L1102.74 703.50 A13 13 0 0 0 1101.99 705.03 Z" fill="rgb(38,255,160)"/>
+      <path d="M1114 710 L1101.99 705.03 A13 13 0 0 0 1101.44 706.64 Z" fill="rgb(38,255,187)"/>
+      <path d="M1114 710 L1101.44 706.64 A13 13 0 0 0 1101.11 708.30 Z" fill="rgb(38,255,214)"/>
+      <path d="M1114 710 L1101.11 708.30 A13 13 0 0 0 1101.00 710.00 Z" fill="rgb(38,255,241)"/>
+      <path d="M1114 710 L1101.00 710.00 A13 13 0 0 0 1101.11 711.70 Z" fill="rgb(38,241,255)"/>
+      <path d="M1114 710 L1101.11 711.70 A13 13 0 0 0 1101.44 713.36 Z" fill="rgb(38,214,255)"/>
+      <path d="M1114 710 L1101.44 713.36 A13 13 0 0 0 1101.99 714.97 Z" fill="rgb(38,187,255)"/>
+      <path d="M1114 710 L1101.99 714.97 A13 13 0 0 0 1102.74 716.50 Z" fill="rgb(38,160,255)"/>
+      <path d="M1114 710 L1102.74 716.50 A13 13 0 0 0 1103.69 717.91 Z" fill="rgb(38,133,255)"/>
+      <path d="M1114 710 L1103.69 717.91 A13 13 0 0 0 1104.81 719.19 Z" fill="rgb(38,106,255)"/>
+      <path d="M1114 710 L1104.81 719.19 A13 13 0 0 0 1106.09 720.31 Z" fill="rgb(38,79,255)"/>
+      <path d="M1114 710 L1106.09 720.31 A13 13 0 0 0 1107.50 721.26 Z" fill="rgb(38,52,255)"/>
+      <path d="M1114 710 L1107.50 721.26 A13 13 0 0 0 1109.03 722.01 Z" fill="rgb(52,38,255)"/>
+      <path d="M1114 710 L1109.03 722.01 A13 13 0 0 0 1110.64 722.56 Z" fill="rgb(79,38,255)"/>
+      <path d="M1114 710 L1110.64 722.56 A13 13 0 0 0 1112.30 722.89 Z" fill="rgb(106,38,255)"/>
+      <path d="M1114 710 L1112.30 722.89 A13 13 0 0 0 1114.00 723.00 Z" fill="rgb(133,38,255)"/>
+      <path d="M1114 710 L1114.00 723.00 A13 13 0 0 0 1115.70 722.89 Z" fill="rgb(160,38,255)"/>
+      <path d="M1114 710 L1115.70 722.89 A13 13 0 0 0 1117.36 722.56 Z" fill="rgb(187,38,255)"/>
+      <path d="M1114 710 L1117.36 722.56 A13 13 0 0 0 1118.97 722.01 Z" fill="rgb(214,38,255)"/>
+      <path d="M1114 710 L1118.97 722.01 A13 13 0 0 0 1120.50 721.26 Z" fill="rgb(241,38,255)"/>
+      <path d="M1114 710 L1120.50 721.26 A13 13 0 0 0 1121.91 720.31 Z" fill="rgb(255,38,241)"/>
+      <path d="M1114 710 L1121.91 720.31 A13 13 0 0 0 1123.19 719.19 Z" fill="rgb(255,38,214)"/>
+      <path d="M1114 710 L1123.19 719.19 A13 13 0 0 0 1124.31 717.91 Z" fill="rgb(255,38,187)"/>
+      <path d="M1114 710 L1124.31 717.91 A13 13 0 0 0 1125.26 716.50 Z" fill="rgb(255,38,160)"/>
+      <path d="M1114 710 L1125.26 716.50 A13 13 0 0 0 1126.01 714.97 Z" fill="rgb(255,38,133)"/>
+      <path d="M1114 710 L1126.01 714.97 A13 13 0 0 0 1126.56 713.36 Z" fill="rgb(255,38,106)"/>
+      <path d="M1114 710 L1126.56 713.36 A13 13 0 0 0 1126.89 711.70 Z" fill="rgb(255,38,79)"/>
+      <path d="M1114 710 L1126.89 711.70 A13 13 0 0 0 1127.00 710.00 Z" fill="rgb(255,38,52)"/>
+      <circle cx="1114" cy="710" r="13" fill="none" stroke="#c4c4c8"/>
+    </g>
+  </g>
+  <text class="dim" x="964" y="748">Rightmost swatch opens the color picker.</text>
+  <text class="dim" x="964" y="768">The tint shifts hue, saturation, and</text>
+  <text class="dim" x="964" y="784">brightness across the whole folder.</text>
+  <!-- open appearance menu (shown expanded) -->
+  <rect x="1104" y="56" width="126" height="86" rx="7" fill="#ffffff" stroke="#c4c4c8"/>
+  <rect x="1108" y="60" width="118" height="24" rx="5" fill="#007aff"/>
+  <path d="M1117 72 l3 3 l6 -7" fill="none" stroke="#ffffff" stroke-width="1.6"/>
+  <circle cx="1136" cy="72" r="4.5" fill="none" stroke="#ffffff"/>
+  <path d="M1136 67.5 a4.5 4.5 0 0 0 0 9 z" fill="#ffffff"/>
+  <text x="1148" y="76" font-size="12" fill="#ffffff">Automatic</text>
+  <circle cx="1136" cy="98" r="4.5" fill="none" stroke="#4a4a4f"/>
+  <g stroke="#4a4a4f" stroke-linecap="round">
+    <line x1="1136" y1="90" x2="1136" y2="91.5"/><line x1="1136" y1="104.5" x2="1136" y2="106"/>
+    <line x1="1128" y1="98" x2="1129.5" y2="98"/><line x1="1142.5" y1="98" x2="1144" y2="98"/>
+  </g>
+  <text class="lbl" x="1148" y="102">Light</text>
+  <path d="M1140 118 a6.5 6.5 0 1 1 -6 -6 a5 5 0 0 0 6 6 z" fill="none" stroke="#4a4a4f"/>
+  <text class="lbl" x="1148" y="128">Dark</text>
+</svg>

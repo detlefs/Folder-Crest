@@ -1,0 +1,5 @@
+# Symlink to the build directory in DerivedData
+Build
+
+.DS_Store
+xcuserdata/

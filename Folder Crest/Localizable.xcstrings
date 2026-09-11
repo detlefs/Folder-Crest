@@ -1,0 +1,728 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "A dropped folder replaces the target and gets its icon set directly.": {
+      "comment": "Hint under the destination row",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein gezogener Ordner ersetzt das Ziel und erhält sein Icon direkt."
+          }
+        }
+      }
+    },
+    "Appearance": {
+      "comment": "Label of the light/dark mode picker",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erscheinungsbild"
+          }
+        }
+      }
+    },
+    "Apply to Folder": {
+      "comment": "Primary button that writes the icon onto a folder",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Auf Ordner anwenden"
+          }
+        }
+      }
+    },
+    "Automatic": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Automatisch"
+          }
+        }
+      }
+    },
+    "Black": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schwarz"
+          }
+        }
+      }
+    },
+    "Bold": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fett"
+          }
+        }
+      }
+    },
+    "Change folder": {
+      "comment": "Label when a dropped folder is the target",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ordner ändern"
+          }
+        }
+      }
+    },
+    "Change…": {
+      "comment": "Button that opens the folder chooser",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ändern …"
+          }
+        }
+      }
+    },
+    "Clear Source": {
+      "comment": "Button that removes the dropped image or typed text",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quelle löschen"
+          }
+        }
+      }
+    },
+    "Cream": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creme"
+          }
+        }
+      }
+    },
+    "Custom Color": {
+      "comment": "Label of the custom tint colour picker",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eigene Farbe"
+          }
+        }
+      }
+    },
+    "Dark": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dunkel"
+          }
+        }
+      }
+    },
+    "Drag an SF Symbol, image, or folder here": {
+      "comment": "Hint under the large folder preview",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SF Symbol, Bild oder Ordner hierher ziehen"
+          }
+        }
+      }
+    },
+    "Engraved": {
+      "comment": "Rendering mode: cut into the folder",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relief"
+          }
+        }
+      }
+    },
+    "Folder Color": {
+      "comment": "Inspector tab for the folder tint",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ordnerfarbe"
+          }
+        }
+      }
+    },
+    "Folder Style": {
+      "comment": "Label of the folder style picker",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ordnerstil"
+          }
+        }
+      }
+    },
+    "Folder icon preview": {
+      "comment": "Accessibility label of the large preview",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorschau des Ordner-Icons"
+          }
+        }
+      }
+    },
+    "Green": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Grün"
+          }
+        }
+      }
+    },
+    "Heavy": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kräftig"
+          }
+        }
+      }
+    },
+    "Horizontal Offset": {
+      "comment": "Slider for the sideways icon offset",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Horizontaler Versatz"
+          }
+        }
+      }
+    },
+    "Icon": {
+      "comment": "Default name of a saved icon\nInspector tab for the icon's placement",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icon"
+          }
+        }
+      }
+    },
+    "Icons you save appear here.": {
+      "comment": "Empty state description of the library",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gesicherte Icons erscheinen hier."
+          }
+        }
+      }
+    },
+    "Image": {
+      "comment": "Sidebar subtitle for an engraved image",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bild"
+          }
+        }
+      }
+    },
+    "Image · Original colors": {
+      "comment": "Sidebar subtitle for an image kept in its own colours",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bild · Originalfarben"
+          }
+        }
+      }
+    },
+    "Inspector": {
+      "comment": "Label of the inspector tab picker\nToolbar button that shows or hides the inspector",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inspektor"
+          }
+        }
+      }
+    },
+    "Light": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hell"
+          }
+        }
+      }
+    },
+    "Light Blue": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hellblau"
+          }
+        }
+      }
+    },
+    "Medium": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mittel"
+          }
+        }
+      }
+    },
+    "Melon": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Melone"
+          }
+        }
+      }
+    },
+    "My Icons": {
+      "comment": "Heading of the saved icons list",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meine Icons"
+          }
+        }
+      }
+    },
+    "New folder in": {
+      "comment": "Label before the folder the new folder is created in",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neuer Ordner in"
+          }
+        }
+      }
+    },
+    "No saved icons": {
+      "comment": "Empty state title of the library",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine gesicherten Icons"
+          }
+        }
+      }
+    },
+    "No tint": {
+      "comment": "Tooltip of the swatch that removes the folder tint",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Tönung"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
+    },
+    "Orange": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Orange"
+          }
+        }
+      }
+    },
+    "Original Colors": {
+      "comment": "Rendering mode: pasted in its own colours",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Originalfarben"
+          }
+        }
+      }
+    },
+    "Original colors apply only to dropped images and multicolor symbols.": {
+      "comment": "Hint under the rendering mode picker",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Originalfarben gelten nur für gezogene Bilder und mehrfarbige Symbole."
+          }
+        }
+      }
+    },
+    "Plain folder": {
+      "comment": "Sidebar subtitle for a folder with no icon on it",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ordner ohne Icon"
+          }
+        }
+      }
+    },
+    "Purple": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Violett"
+          }
+        }
+      }
+    },
+    "RENDERING": {
+      "comment": "Section heading in the inspector",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "DARSTELLUNG"
+          }
+        }
+      }
+    },
+    "Red": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rot"
+          }
+        }
+      }
+    },
+    "Regular": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Normal"
+          }
+        }
+      }
+    },
+    "Remove Icon": {
+      "comment": "Button that deletes the selected icon",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icon entfernen"
+          }
+        }
+      }
+    },
+    "Rendering": {
+      "comment": "Label of the rendering mode picker",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Darstellung"
+          }
+        }
+      }
+    },
+    "Reset All": {
+      "comment": "Button that resets every setting",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alles zurücksetzen"
+          }
+        }
+      }
+    },
+    "Save Icon": {
+      "comment": "Button that adds the current icon to the library",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Icon sichern"
+          }
+        }
+      }
+    },
+    "Semibold": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Halbfett"
+          }
+        }
+      }
+    },
+    "Size": {
+      "comment": "Slider for the icon scale",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Größe"
+          }
+        }
+      }
+    },
+    "Something went wrong": {
+      "comment": "Title of the generic error alert",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Es ist ein Fehler aufgetreten"
+          }
+        }
+      }
+    },
+    "Source": {
+      "comment": "Caption of the small source preview",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quelle"
+          }
+        }
+      }
+    },
+    "Source preview": {
+      "comment": "Accessibility label of the small source preview",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorschau der Quelle"
+          }
+        }
+      }
+    },
+    "Teal": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Petrol"
+          }
+        }
+      }
+    },
+    "Text Weight": {
+      "comment": "Picker for the font weight of engraved text",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Textstärke"
+          }
+        }
+      }
+    },
+    "Text or Emoji": {
+      "comment": "Label of the icon text field",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Text oder Emoji"
+          }
+        }
+      }
+    },
+    "The generated icon could not be read.": {
+      "comment": "Error when the rendered icon cannot be turned into image data",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das erzeugte Icon konnte nicht gelesen werden."
+          }
+        }
+      }
+    },
+    "The tint shifts hue, saturation, and brightness across the whole folder.": {
+      "comment": "Hint under the tint palette",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Tönung verschiebt Farbton, Sättigung und Helligkeit des ganzen Ordners."
+          }
+        }
+      }
+    },
+    "Thin": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dünn"
+          }
+        }
+      }
+    },
+    "Ultralight": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ultraleicht"
+          }
+        }
+      }
+    },
+    "Up to %lld characters. A drop replaces the text.": {
+      "comment": "Hint under the icon text field",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Höchstens %lld Zeichen. Ein Drop ersetzt den Text."
+          }
+        }
+      }
+    },
+    "Vertical Offset": {
+      "comment": "Slider for the vertical icon offset",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vertikaler Versatz"
+          }
+        }
+      }
+    },
+    "White": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weiß"
+          }
+        }
+      }
+    },
+    "Yellow": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gelb"
+          }
+        }
+      }
+    },
+    "macOS Big Sur – Dark mode": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS Big Sur – Dunkel"
+          }
+        }
+      }
+    },
+    "macOS Big Sur – Light mode": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS Big Sur – Hell"
+          }
+        }
+      }
+    },
+    "macOS Catalina": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS Catalina"
+          }
+        }
+      }
+    },
+    "macOS Tahoe": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS Tahoe"
+          }
+        }
+      }
+    },
+    "macOS refused to set the icon of “%@”.": {
+      "comment": "Error when NSWorkspace declines to write a folder icon",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "macOS hat es abgelehnt, das Icon von „%@“ zu setzen."
+          }
+        }
+      }
+    },
+    "untitled folder": {
+      "comment": "Name of a newly created folder, matching Finder's",
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "unbenannter Ordner"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.2"
+}

@@ -9,6 +9,8 @@ import SwiftUI
 @main
 struct Folder_CrestApp: App {
 
+    @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
+
     @State private var studio = IconStudio()
 
     /// The library lives in SwiftData.
@@ -36,5 +38,13 @@ struct Folder_CrestApp: App {
         .commands {
             CommandGroup(replacing: .newItem) {}
         }
+    }
+}
+
+/// Closing the window quits: there is one window and nothing to keep running
+/// behind it.
+final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        true
     }
 }

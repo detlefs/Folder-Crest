@@ -19,8 +19,13 @@ struct Folder_CrestApp: App {
     /// needs a paid developer account — see `PLAN.md`. Turning it on is one
     /// argument here; the model was written to CloudKit's rules from the start
     /// (defaults everywhere, no unique constraints), so nothing else changes.
+    ///
+    /// Under `-ui-testing` the store is thrown away again, so a UI test can
+    /// save and rename icons without leaving them in the real library.
     private let container: ModelContainer = {
-        let configuration = ModelConfiguration(cloudKitDatabase: .none)
+        let isUITest = ProcessInfo.processInfo.arguments.contains("-ui-testing")
+        let configuration = ModelConfiguration(isStoredInMemoryOnly: isUITest,
+                                               cloudKitDatabase: .none)
         do {
             return try ModelContainer(for: SavedIcon.self, configurations: configuration)
         } catch {

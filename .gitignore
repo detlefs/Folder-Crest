@@ -3,3 +3,6 @@ Build
 
 .DS_Store
 xcuserdata/
+
+# Icon exports used only to build the README carousel
+readme_assets/_new/

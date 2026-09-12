@@ -38,8 +38,8 @@ struct Folder_CrestApp: App {
         WindowGroup {
             MainView()
                 .environment(studio)
-                .frame(minWidth: 900, minHeight: 620)
         }
+        .defaultSize(width: 1100, height: 720)
         .modelContainer(container)
         .commands {
             CommandGroup(replacing: .newItem) {}
@@ -85,6 +85,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     /// document in one window; a second tab of it would have nothing to show.
     func applicationWillFinishLaunching(_ notification: Notification) {
         NSWindow.allowsAutomaticWindowTabbing = false
+    }
+
+    /// The window minimum belongs to the window, not to a `frame` around the
+    /// scene content: a minimum imposed on the `NavigationSplitView` has to be
+    /// redistributed over its columns mid-layout, which makes a split view
+    /// child report a new minimum size during the window's constraint update
+    /// pass. macOS 27 throws on that re-entrancy and the app aborts.
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        guard let window = NSApp.windows.first else {
+            NSLog("No window at launch; window minimum size not applied.")
+            return
+        }
+        window.contentMinSize = NSSize(width: 900, height: 620)
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

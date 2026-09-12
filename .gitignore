@@ -6,3 +6,6 @@ xcuserdata/
 
 # Icon exports used only to build the README carousel
 readme_assets/_new/
+
+# Custom folder icon; its data lives in the resource fork, Git only sees 0 bytes
+Icon?

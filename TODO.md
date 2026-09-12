@@ -3,10 +3,19 @@
 Offene Punkte der Portierung. Der vollständige Plan, alle Messwerte und die
 Begründungen stehen in [PLAN.md](PLAN.md); hier steht nur, was noch zu tun ist.
 
-**Stand 2026-09-11:** Schritte 0–9, 11, 12 erledigt, 25 Unit- und 7 UI-Tests
-grün. Offen ist Schritt 10 und das Drumherum.
+**Stand 2026-09-12:** Schritte 0–9, 11, 12 erledigt, 25 Unit- und 10 UI-Tests
+grün (Debug wie Release). Offen ist Schritt 10 und das Drumherum.
 
-Testlauf (muss Release sein, Debug ist hier 100× langsamer):
+Normaler Testlauf im Debug — die Debug-Konfiguration steht auf
+`SWIFT_OPTIMIZATION_LEVEL = -O`, deshalb ist sie hier nicht mehr langsamer als
+Release:
+
+```bash
+xcodebuild -project "Folder Crest.xcodeproj" -scheme "Folder Crest" \
+  -destination 'platform=macOS' test
+```
+
+Der Release-Lauf braucht zusätzlich `ENABLE_TESTABILITY=YES`:
 
 ```bash
 xcodebuild -project "Folder Crest.xcodeproj" -scheme "Folder Crest" \
@@ -14,7 +23,7 @@ xcodebuild -project "Folder Crest.xcodeproj" -scheme "Folder Crest" \
   -destination 'platform=macOS' test
 ```
 
-`ENABLE_TESTABILITY=YES` ist nicht optional: die Unit-Tests importieren das
+`ENABLE_TESTABILITY=YES` ist dort nicht optional: die Unit-Tests importieren das
 App-Modul mit `@testable`, und ohne Testbarkeit bricht im Release schon deren
 Build ab („unable to resolve Swift module dependency to a compatible module:
 'Folder_Crest'"). Das gilt auch, wenn nur die UI-Tests laufen sollen —
@@ -71,16 +80,13 @@ Ausführlich in PLAN.md, Abschnitt 9 („Zurückgestellte Fragen").
 - [ ] **Icon auf einen echten Ordner schreiben** und im Finder kontrollieren,
       inklusive der kleinen Grössen in Listen- und Spaltenansicht.
 
-## Repo-Hygiene vor dem ersten Commit
+## Repo-Hygiene
 
-Noch ist nichts committet: 21 Einträge stehen ungetrackt oder geändert im
-Arbeitsverzeichnis.
-
-- [ ] **`.gitignore` anlegen**, bevor committet wird. Sonst landen
-      `xcuserdata/`, `.DS_Store` und Build-Reste dauerhaft in der Historie.
-- [ ] **LICENSE ergänzen** — MIT, wie in den globalen Vorgaben festgelegt.
-- [ ] **README.md schreiben** (auf Englisch).
-- [ ] Erst danach committen.
+- [x] **`.gitignore` anlegen.** Steht im Repo.
+- [x] **LICENSE ergänzen** — MIT, wie in den globalen Vorgaben festgelegt.
+- [ ] **README.md schreiben** (auf Englisch). Fehlt noch.
+- [ ] **`Icon\r` ignorieren** — das Finder-Ordnericon liegt ungetrackt im
+      Arbeitsverzeichnis.
 
 ## Später, bewusst zurückgestellt
 
@@ -98,3 +104,9 @@ Arbeitsverzeichnis.
       stimmt; neu messen lässt es sich mit demselben Verfahren
       (Bounding-Box über Alpha > 8, Mittelfarbe über die Icon-Box, Gravurfarbe
       aus der Differenz zu den Symbolen von Downloads/Dokumente/Programme).
+
+## Manuelle Test-Ergebnisse
+
+- [ ] Der Klick auf ein gespeichertes Icon funktioniert nur in einem leeren Bereich, nicht beim Klick auf das Symbol oder einen Text. Das sollte behiben werden.
+- [ ] Im Text "Drag an SF Symbol, image, or folder here" soll der Teil SF Symbol als Link ausgeführt sein, der im Standardbrowser [https://developer.apple.com/sf-symbols/](https://developer.apple.com/sf-symbols/) öffnet.
+

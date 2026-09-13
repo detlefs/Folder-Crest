@@ -1,6 +1,7 @@
 #!/usr/bin/env swift
 
-// Builds the README carousel: a row of folder icons that swaps every 1.25s.
+// Builds the README carousel: a row of folder icons where two tiles at a time
+// flip around their horizontal or vertical axis and turn into the next icon.
 // Keeps the alpha channel, so it is written as an APNG, not a GIF.
 //
 // Usage: Scripts/make-icon-carousel.swift [source directory] [output.png]
@@ -19,7 +20,11 @@ func fail(_ message: String) -> Never {
 
 let tile = 120
 let columns = 6
-let frameSeconds = 1.25
+let holdSeconds = 1.25
+let flipFrames = 12
+let flipFrameSeconds = 1.0 / 30
+// Tiles that flip together; one pass through the list replaces the whole row
+let flipPairs = [(0, 4), (2, 5), (1, 3)]
 let sourceSize = 1024  // which per-size PNG to downscale from
 
 let arguments = CommandLine.arguments
@@ -46,8 +51,11 @@ func iconPaths() -> [URL] {
     return icons
 }
 
-/// One tile-sized frame of the strip, drawn from the icons starting at `offset`
-func drawFrame(icons: [CGImage], offset: Int) -> CGImage {
+/// One frame of the strip. Slots in `flipping` are mid-flip at `progress` (0...1):
+/// the old icon shrinks to an edge, the new one grows back from it.
+func drawFrame(
+    current: [CGImage], next: [CGImage], flipping: [Int] = [], progress: Double = 0
+) -> CGImage {
     guard let context = CGContext(
         data: nil, width: tile * columns, height: tile,
         bitsPerComponent: 8, bytesPerRow: 0,
@@ -58,8 +66,18 @@ func drawFrame(icons: [CGImage], offset: Int) -> CGImage {
     }
     context.interpolationQuality = .high
     for column in 0..<columns {
-        let icon = icons[(offset + column) % icons.count]
-        context.draw(icon, in: CGRect(x: column * tile, y: 0, width: tile, height: tile))
+        let rect = CGRect(x: column * tile, y: 0, width: tile, height: tile)
+        guard let pairIndex = flipping.firstIndex(of: column) else {
+            context.draw(current[column], in: rect)
+            continue
+        }
+        // Ease in and out; the edge-on moment sits at progress 0.5
+        let scale = abs(cos(Double.pi * (0.5 - 0.5 * cos(Double.pi * progress))))
+        let icon = progress < 0.5 ? current[column] : next[column]
+        let horizontal = pairIndex % 2 == 0
+        context.draw(icon, in: rect.insetBy(
+            dx: horizontal ? rect.width * (1 - scale) / 2 : 0,
+            dy: horizontal ? 0 : rect.height * (1 - scale) / 2))
     }
     guard let image = context.makeImage() else { fail("could not render a frame") }
     return image
@@ -74,9 +92,11 @@ let icons: [CGImage] = paths.map { path in
     return image
 }
 
-// Shifting by `columns` each frame, the row repeats after this many frames
+// Each full pass shifts the row by `columns`, so it repeats after this many passes
 func greatestCommonDivisor(_ a: Int, _ b: Int) -> Int { b == 0 ? a : greatestCommonDivisor(b, a % b) }
-let frameCount = icons.count / greatestCommonDivisor(icons.count, columns)
+let passes = icons.count / greatestCommonDivisor(icons.count, columns)
+let flipCount = passes * flipPairs.count
+let frameCount = flipCount * flipFrames
 
 try? FileManager.default.createDirectory(
     at: output.deletingLastPathComponent(), withIntermediateDirectories: true)
@@ -89,15 +109,33 @@ CGImageDestinationSetProperties(destination, [
     kCGImagePropertyPNGDictionary: [kCGImagePropertyAPNGLoopCount: 0]
 ] as CFDictionary)
 
-for frame in 0..<frameCount {
-    CGImageDestinationAddImage(destination, drawFrame(icons: icons, offset: frame * columns), [
-        kCGImagePropertyPNGDictionary: [kCGImagePropertyAPNGDelayTime: frameSeconds]
+func addFrame(_ image: CGImage, seconds: Double) {
+    CGImageDestinationAddImage(destination, image, [
+        kCGImagePropertyPNGDictionary: [kCGImagePropertyAPNGDelayTime: seconds]
     ] as CFDictionary)
+}
+
+var row = Array(icons[0..<columns])
+for step in 0..<flipCount {
+    let pass = step / flipPairs.count
+    let (a, b) = flipPairs[step % flipPairs.count]
+    var next = row
+    for slot in [a, b] {
+        next[slot] = icons[((pass + 1) * columns + slot) % icons.count]
+    }
+    addFrame(drawFrame(current: row, next: next), seconds: holdSeconds)
+    for frame in 1..<flipFrames {  // the last one would repeat the next hold frame
+        let image = drawFrame(current: row, next: next, flipping: [a, b],
+                              progress: Double(frame) / Double(flipFrames))
+        addFrame(image, seconds: flipFrameSeconds)
+    }
+    row = next
 }
 guard CGImageDestinationFinalize(destination) else {
     fail("could not finalise '\(output.path)'")
 }
 
 let size = (try? output.resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0
+let duration = Double(flipCount) * (holdSeconds + Double(flipFrames - 1) * flipFrameSeconds)
 print("\(output.path): \(frameCount) frames of \(icons.count) icons, "
-      + "\(String(format: "%.1f", Double(frameCount) * frameSeconds))s, \(size / 1024) KiB")
+      + "\(String(format: "%.1f", duration))s, \(size / 1024) KiB")

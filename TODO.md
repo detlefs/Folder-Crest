@@ -3,7 +3,7 @@
 Offene Punkte der Portierung. Der vollständige Plan, alle Messwerte und die
 Begründungen stehen in [PLAN.md](PLAN.md); hier steht nur, was noch zu tun ist.
 
-**Stand 2026-09-13 (1.1, Build 2):** Schritte 0–9, 11, 12 erledigt, 25 Unit-
+**Stand 2026-09-13 (1.2, Build 3):** Schritte 0–9, 11, 12 erledigt, 28 Unit-
 und 14 UI-Tests grün (Debug wie Release). Offen ist Schritt 10 und das Drumherum.
 
 Normaler Testlauf im Debug — die Debug-Konfiguration steht auf

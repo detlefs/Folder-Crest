@@ -73,9 +73,17 @@ colours — with an optional tint for the whole folder.
 - Collapsible inspector.
 - Localised in English and German.
 
+## Limitations
+
+- **System folder colour** — Folder Crest writes each icon as a finished image.
+  If you later change the folder colour system wide (System Settings →
+  Appearance → Folder color), folders that already carry a Folder Crest icon
+  keep their old colour. Folder Crest itself picks up the new colour as its
+  default after a restart; apply the icon again to bring a folder in line.
+
 ## Requirements
 
-- macOS 26 Tahoe or later (universal build, tested on Apple silicon)
+- macOS 26 Tahoe or later on Apple silicon (arm64 only, no Intel build)
 - Xcode 26.5 to build from source
 - Optional, for dragging in symbols: the
   [SF Symbols](https://developer.apple.com/sf-symbols/) app. It may also need the SF Pro font installed system wide — a freshly installed SF Symbols app will tell you so. Download the fonts from [Apple Fonts](https://developer.apple.com/fonts/).

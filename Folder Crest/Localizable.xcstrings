@@ -139,17 +139,6 @@
         }
       }
     },
-    "Drag an SF Symbol, image, or folder here" : {
-      "comment" : "Hint under the large folder preview",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SF Symbol, Bild oder Ordner hierher ziehen"
-          }
-        }
-      }
-    },
     "Engraved" : {
       "comment" : "Rendering mode: cut into the folder",
       "localizations" : {
@@ -693,6 +682,39 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gelb"
+          }
+        }
+      }
+    },
+    "Drag an [SF Symbol](https://developer.apple.com/sf-symbols/), image, or folder here" : {
+      "comment" : "Hint under the large folder preview; keep the link around “SF Symbol”",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[SF Symbol](https://developer.apple.com/sf-symbols/), Bild oder Ordner hierher ziehen"
+          }
+        }
+      }
+    },
+    "Save to Library" : {
+      "comment" : "File menu entry that adds the current icon to the library",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Sammlung sichern"
+          }
+        }
+      }
+    },
+    "Load from Library" : {
+      "comment" : "File menu entry that loads the selected library icon again",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus Sammlung laden"
           }
         }
       }

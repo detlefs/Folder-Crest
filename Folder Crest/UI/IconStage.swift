@@ -52,15 +52,6 @@ struct FolderCanvas: View {
                     .padding(24)
             }
 
-            VStack {
-                Spacer()
-                Text("Drag an SF Symbol, image, or folder here",
-                     comment: "Hint under the large folder preview")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-                    .padding(.bottom, 12)
-            }
-
             if studio.isRendering {
                 VStack {
                     Spacer()
@@ -74,7 +65,32 @@ struct FolderCanvas: View {
             }
 
             DropTarget()
+
+            // Above the drop target, or it would swallow the link's click.
+            // Drags still reach the target: AppKit looks for registered views,
+            // and the text is not one.
+            VStack {
+                Spacer()
+                Text("Drag an [SF Symbol](https://developer.apple.com/sf-symbols/), image, or folder here",
+                     comment: "Hint under the large folder preview; keep the link around “SF Symbol”")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+                    .padding(.bottom, 12)
+                    .environment(\.openURL, OpenURLAction { url in
+                        Self.openSFSymbols() ? .handled : .systemAction(url)
+                    })
+            }
         }
+    }
+
+    /// The SF Symbols app where it is installed, the beta if only that is; the
+    /// link falls back to the browser otherwise.
+    private static func openSFSymbols() -> Bool {
+        guard let app = ["com.apple.SFSymbols", "com.apple.SFSymbols-beta"].lazy
+            .compactMap({ NSWorkspace.shared.urlForApplication(withBundleIdentifier: $0) }).first
+        else { return false }
+        NSWorkspace.shared.openApplication(at: app, configuration: .init())
+        return true
     }
 }
 
@@ -165,7 +181,6 @@ struct SourceStrip: View {
 
 struct DestinationRow: View {
     @Environment(IconStudio.self) private var studio
-    @State private var isApplying = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -180,7 +195,7 @@ struct DestinationRow: View {
                 Text(studio.destinationName).fontWeight(.semibold)
 
                 Button {
-                    chooseLocation()
+                    studio.chooseLocation()
                 } label: {
                     Text("Change…", comment: "Button that opens the folder chooser")
                 }
@@ -195,17 +210,12 @@ struct DestinationRow: View {
                 }
 
                 Button {
-                    isApplying = true
-                    Task {
-                        await studio.applyToFolder()
-                        isApplying = false
-                    }
+                    Task { await studio.applyToFolder() }
                 } label: {
                     Text("Apply to Folder", comment: "Primary button that writes the icon onto a folder")
                 }
-                .keyboardShortcut("s", modifiers: [.command, .shift])
                 .buttonStyle(.borderedProminent)
-                .disabled(isApplying)
+                .disabled(studio.isApplying)
             }
 
             Text("A dropped folder replaces the target and gets its icon set directly.",
@@ -213,17 +223,6 @@ struct DestinationRow: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
-    }
-
-    private func chooseLocation() {
-        let panel = NSOpenPanel()
-        panel.canChooseDirectories = true
-        panel.canChooseFiles = false
-        panel.allowsMultipleSelection = false
-        panel.directoryURL = studio.newFolderLocation
-        guard panel.runModal() == .OK, let url = panel.url else { return }
-        studio.newFolderLocation = url
-        studio.existingFolder = nil
     }
 }
 

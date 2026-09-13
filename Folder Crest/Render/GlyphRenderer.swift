@@ -136,9 +136,17 @@ extension GlyphRenderer {
     /// they take the second render path: composited on top of the folder
     /// instead of engraved into it.
     ///
+    /// Only characters that are emoji get drawn; letters around them are left
+    /// out, as in the reference.
+    ///
     /// - Returns: The emoji, cropped to its ink, or `nil` if the text contains
-    ///   nothing the emoji font can draw.
+    ///   no emoji the emoji font can draw.
     static func colourEmoji(_ text: String) -> PixelBuffer? {
+        // The emoji font also has glyphs for the space, digits, "#" and "*"
+        // (the keycap bases), and Core Text falls back to a text font for the
+        // letters beside them despite the empty cascade list. Asking the font
+        // alone turned "A " into a black "A" pasted on the folder.
+        let text = String(text.filter(isEmoji))
         guard !text.isEmpty else { return nil }
 
         let size = Constants.emojiFontSize
@@ -179,6 +187,14 @@ extension GlyphRenderer {
 
         unpremultiply(&buffer)
         return cropToInk(buffer)
+    }
+
+    /// Emoji by default presentation, or text characters turned into emoji by
+    /// the variation selector or the keycap mark ("❤️", "8️⃣").
+    static func isEmoji(_ character: Character) -> Bool {
+        character.unicodeScalars.contains {
+            $0.properties.isEmojiPresentation || $0 == "\u{FE0F}" || $0 == "\u{20E3}"
+        }
     }
 
     /// Whether the emoji font can draw at least one character of the text.

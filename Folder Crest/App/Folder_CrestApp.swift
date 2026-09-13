@@ -43,6 +43,7 @@ struct Folder_CrestApp: App {
         .modelContainer(container)
         .commands {
             CommandGroup(replacing: .newItem) {}
+            FileCommands(studio: studio)
             CommandGroup(replacing: .appInfo) {
                 Button {
                     NSApp.orderFrontStandardAboutPanel(options: [.credits: Self.credits])
@@ -75,6 +76,50 @@ struct Folder_CrestApp: App {
             string: "www.feltedred.de",
             attributes: style.merging([.link: URL(string: "https://www.feltedred.de")!]) { _, new in new }))
         return text
+    }
+}
+
+/// The window's actions in the File menu. Menu key equivalents fire wherever
+/// focus is; a shortcut on a button deep in the window did not.
+struct FileCommands: Commands {
+    let studio: IconStudio
+    @FocusedValue(\.library) private var library
+
+    var body: some Commands {
+        CommandGroup(after: .newItem) {
+            Button {
+                library?.save()
+            } label: {
+                Text("Save to Library", comment: "File menu entry that adds the current icon to the library")
+            }
+            .keyboardShortcut("s", modifiers: .command)
+            .disabled(library == nil)
+
+            Button {
+                library?.load?()
+            } label: {
+                Text("Load from Library", comment: "File menu entry that loads the selected library icon again")
+            }
+            .keyboardShortcut("o", modifiers: .command)
+            .disabled(library?.load == nil)
+
+            Divider()
+
+            Button {
+                studio.reset()
+            } label: {
+                Text("Reset All", comment: "Button that resets every setting")
+            }
+            .keyboardShortcut("r", modifiers: [.command, .shift])
+
+            Button {
+                Task { await studio.applyToFolder() }
+            } label: {
+                Text("Apply to Folder", comment: "Primary button that writes the icon onto a folder")
+            }
+            .keyboardShortcut(.return, modifiers: .command)
+            .disabled(studio.isApplying)
+        }
     }
 }
 

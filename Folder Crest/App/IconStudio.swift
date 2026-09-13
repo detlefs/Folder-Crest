@@ -40,12 +40,16 @@ final class IconStudio {
     private(set) var preview: CGImage?
     private(set) var sourcePreview: CGImage?
     private(set) var isRendering = false
+    private(set) var isApplying = false
     var lastError: String?
 
     /// Where a new folder gets created, unless an existing one was dropped.
-    var newFolderLocation = FileManager.default.urls(for: .desktopDirectory,
-                                                     in: .userDomainMask).first
+    private(set) var newFolderLocation = FileManager.default.urls(for: .desktopDirectory,
+                                                                  in: .userDomainMask).first
         ?? FileManager.default.homeDirectoryForCurrentUser
+    /// The sandbox only lets the app write where the user pointed it. The
+    /// Desktop default is a suggestion until it went through the open panel.
+    private var locationGranted = false
     /// A folder dropped onto the window: its icon is changed directly.
     var existingFolder: URL?
 
@@ -261,6 +265,13 @@ final class IconStudio {
     /// Applies the icon to the target folder, waiting for a render that is
     /// still in flight rather than writing the previous one.
     func applyToFolder() async {
+        guard !isApplying else { return }
+        if existingFolder == nil && !locationGranted {
+            guard chooseLocation() else { return }
+        }
+        isApplying = true
+        defer { isApplying = false }
+
         await renderTask?.value
         guard let rendered else { return }
 
@@ -276,6 +287,21 @@ final class IconStudio {
         } catch {
             lastError = error.localizedDescription
         }
+    }
+
+    /// Asks where new folders go. Returns false when the panel was cancelled.
+    @discardableResult
+    func chooseLocation() -> Bool {
+        let panel = NSOpenPanel()
+        panel.canChooseDirectories = true
+        panel.canChooseFiles = false
+        panel.allowsMultipleSelection = false
+        panel.directoryURL = newFolderLocation
+        guard panel.runModal() == .OK, let url = panel.url else { return false }
+        newFolderLocation = url
+        locationGranted = true
+        existingFolder = nil
+        return true
     }
 
     /// A thumbnail for the library sidebar.

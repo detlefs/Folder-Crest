@@ -28,14 +28,20 @@ struct LibrarySidebar: View {
                                    isRenaming: renaming == icon.id,
                                    endRename: { renaming = nil })
                             .tag(icon)
-                            .contextMenu { RenameButton() }
-                            .renameAction { renaming = icon.id }
-                            .simultaneousGesture(
-                                TapGesture(count: 2).onEnded { renaming = icon.id })
                     }
                 } header: {
                     Text("My Icons", comment: "Heading of the saved icons list")
                 }
+            }
+            // The list's own menu and primary action cover the whole row. A
+            // tap gesture on the row would claim clicks on its image and text,
+            // and only the empty part of the row would still select.
+            .contextMenu(forSelectionType: SavedIcon.self) { selected in
+                if let icon = selected.first {
+                    RenameButton().renameAction { renaming = icon.id }
+                }
+            } primaryAction: { selected in
+                renaming = selected.first?.id
             }
             .listStyle(.sidebar)
             .overlay {
@@ -64,7 +70,6 @@ struct LibrarySidebar: View {
                         Image(systemName: "plus")
                     }
                 }
-                .keyboardShortcut("s", modifiers: .command)
 
                 Button {
                     remove()
@@ -79,11 +84,16 @@ struct LibrarySidebar: View {
 
                 Spacer()
             }
-            .labelStyle(.iconOnly)
+            // A borderless button only hits on its glyph, and the minus is a
+            // thin line. A fixed square makes both buttons equally easy to hit.
+            .labelStyle(SquareIconLabelStyle())
             .buttonStyle(.borderless)
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
         }
+        .focusedSceneValue(\.library, LibraryCommands(
+            save: { Task { await save() } },
+            load: selection.map { icon in { studio.load(icon) } }))
     }
 
     private func save() async {
@@ -111,6 +121,27 @@ struct LibrarySidebar: View {
         context.delete(selection)
         self.selection = nil
     }
+}
+
+private struct SquareIconLabelStyle: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        // Built on the icon-only style, which keeps the title for VoiceOver
+        Label(configuration)
+            .labelStyle(.iconOnly)
+            .frame(width: 24, height: 22)
+            .contentShape(.rect)
+    }
+}
+
+/// What the File menu needs from the library, published by the sidebar.
+struct LibraryCommands {
+    var save: () -> Void
+    /// Nil while nothing is selected.
+    var load: (() -> Void)?
+}
+
+extension FocusedValues {
+    @Entry var library: LibraryCommands?
 }
 
 struct LibraryRow: View {

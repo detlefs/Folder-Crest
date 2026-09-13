@@ -46,4 +46,24 @@ struct GlyphRendererTests {
     @Test func emptyTextHasNoMask() {
         #expect(GlyphRenderer.mask(text: "", imageSize: 1024, weight: .bold) == nil)
     }
+
+    /// The emoji font has glyphs for the space and the digits too; text made
+    /// of those has to stay on the engraving path.
+    @Test("Letters, spaces and digits are not emoji", arguments: ["A ", " A", "8", "12 #", "A*"])
+    func noEmoji(text: String) {
+        #expect(GlyphRenderer.colourEmoji(text) == nil)
+    }
+
+    @Test("Letters beside an emoji are left out of it")
+    func emojiDropsLetters() throws {
+        let alone = try #require(GlyphRenderer.colourEmoji("\u{1F419}"))
+        let mixed = try #require(GlyphRenderer.colourEmoji("A \u{1F419}"))
+        #expect(mixed.width == alone.width)
+        #expect(mixed.height == alone.height)
+    }
+
+    @Test("Variation selector and keycap make emoji", arguments: ["\u{2764}\u{FE0F}", "8\u{FE0F}\u{20E3}"])
+    func emojiSequences(text: String) {
+        #expect(GlyphRenderer.colourEmoji(text) != nil)
+    }
 }

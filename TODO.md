@@ -58,7 +58,7 @@ die UI-Tests mit „Timed out while enabling automation mode".
 
 Ausführlich in PLAN.md, Abschnitt 9 („Zurückgestellte Fragen").
 
-- [ ] **App-Icon final?** `Folder Crest/app_icon.icon` ist eingehängt und baut
+- [ ] **App-Icon final?** `Folder Crest/new_app_icon.icon` ist eingehängt und baut
 
   durch. Laut Claude-Memory war das Design am 2026-09-05 noch nicht final
   und wurde deshalb damals zurückgebaut.

@@ -12,7 +12,8 @@ colours — with an optional tint for the whole folder.
 
 - **Text** — up to 25 characters, set in SF Rounded in one of nine weights,
   from Ultralight to Black.
-- **Emoji** — typed or pasted into the text field, drawn in full colour.
+- **Emoji** — typed or pasted into the text field, drawn in full colour. When
+  the text mixes emoji and letters, only the emoji are drawn.
 - **SF Symbols** — drag a symbol straight out of the
   [SF Symbols](https://developer.apple.com/sf-symbols/) app. Monochrome symbols
   are engraved, multicolour symbols keep their colours.
@@ -42,8 +43,8 @@ colours — with an optional tint for the whole folder.
 - **New folder** — creates an "untitled folder" with the icon in a location of
   your choice. The first time, the app asks where (Desktop preselected), since
   the sandbox only lets it write where you pointed it.
-- **Existing folder** — drop a folder onto the preview and its icon is changed
-  directly.
+- **Existing folder** — drop a folder onto the preview to make it the target;
+  **Apply to Folder** then changes its icon instead of creating a new folder.
 - Writes every icon size macOS uses (16 to 1024 px), so the icon stays sharp in
   list and column view too.
 - Live preview while editing; **Reset All** returns to a plain folder.
@@ -74,8 +75,10 @@ colours — with an optional tint for the whole folder.
 
 ## Requirements
 
-- macOS 26 Tahoe or later, Apple silicon
+- macOS 26 Tahoe or later (universal build, tested on Apple silicon)
 - Xcode 26.5 to build from source
+- Optional, for dragging in symbols: the
+  [SF Symbols](https://developer.apple.com/sf-symbols/) app. It may also need the SF Pro font installed system wide — a freshly installed SF Symbols app will tell you so. Download the fonts from [Apple Fonts](https://developer.apple.com/fonts/).
 
 ## Building
 
@@ -87,7 +90,9 @@ xcodebuild -project "Folder Crest.xcodeproj" -scheme "Folder Crest" \
   -destination 'platform=macOS' build
 ```
 
-Run the tests with `test` instead of `build`.
+Run the tests with `test` instead of `build`. The UI tests drive the real mouse
+and keyboard, so the Mac is not usable while they run; add
+`-skip-testing:"Folder CrestUITests"` to run only the unit tests.
 
 ## How it works
 

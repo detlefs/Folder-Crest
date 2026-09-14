@@ -16,18 +16,18 @@ A native macOS app that puts a crest on your folders: text, emoji, an SF Symbol 
 
 💾 Download latest Folder Crest release
 
-💾 [Download the latest SF Symbols tool](https://developer.apple.com/sf-symbols/)
+💾 [Download the latest SF Symbols tool](https://developer.apple.com/sf-symbols/) (optional)
 
-💾 [Download the SF Pro font(s)](https://developer.apple.com/fonts/)
+💾 [Download the SF Pro font(s)](https://developer.apple.com/fonts/) (optional)
 
 ---
 
-## Features &amp; Usage
+## Features & Usage
 
-- Drag from different sources to the main arfea or to the text field to add a symbol from several sources:
+- Drag content onto the main area or the text field to add a symbol:
   - **Text** - up to 25 characters. Change font weight in the inspector.
-  - **Emoji** - typed or pasted into the text field, drawn in full color. *Note:* When the text mixes emoji and letters, only the emoji are rendered. *Note 2:*  you can use **ctrl**+**cmd**+**space** or **fn**+**e** to open the emoji panel.
-  - **SF Symbols** - drag a symbol straight out of the [SF Symbols](https://developer.apple.com/sf-symbols/) app. Monochrome symbols are engraved, multicolor symbols keep their colors. *Note:* You can drop a symbol to the text field as well. In that case it's rendered as text (monochrome, engraved) and can also be combined with normal letters.
+  - **Emoji** - typed or pasted into the text field, drawn in full color. *Note:* When the text mixes emoji and letters, only the emoji are rendered. *Note 2:* You can use **ctrl**+**cmd**+**space** or **fn**+**e** to open the emoji panel.
+  - **SF Symbols** - drag a symbol straight out of the [SF Symbols](https://developer.apple.com/sf-symbols/) app, if it is installed. Monochrome symbols are engraved, multicolor symbols keep their colors. *Note:* You can drop a symbol to the text field as well. In that case it's rendered as text (monochrome, engraved) and can also be combined with normal letters.
   - **Images** - drop an image file or image data from any app. For example, drag an image from your browser to Folder Crest directly. Images with transparency work best.
   - From the Icon inspector
     - arrange the size, horizontal or vertical offset.
@@ -42,7 +42,7 @@ A native macOS app that puts a crest on your folders: text, emoji, an SF Symbol 
 - Library
   - Save the current icon with **+** or **⌘S**.
   - Saved icons appear in the sidebar with a thumbnail. Click one to load it back into the editor, rename it by double-click or context menu. Remove it with **−**.
-  - The library stores the recipe, not the  image, so icons can be re-rendered at any time.
+  - The library stores the recipe, not the image, so icons can be re-rendered at any time.
 - App
   - Light, dark or automatic appearance, selectable from the toolbar.
   - Localized in English and German (for now).
@@ -63,7 +63,7 @@ A native macOS app that puts a crest on your folders: text, emoji, an SF Symbol 
 
 ## Building
 
-Open  `Crest.xcodeproj` in Xcode and run the **Folder Crest** scheme, or
+Open `Folder Crest.xcodeproj` in Xcode and run the **Folder Crest** scheme, or
 from the command line:
 
 ```bash
@@ -89,6 +89,6 @@ Folder Crest was built with the help of AI: large parts of the code, the tests
 and the documentation were written together with
 [Claude Code](https://claude.com/claude-code).
 
-## Licence
+## License
 
 Released under the [MIT License](LICENSE).

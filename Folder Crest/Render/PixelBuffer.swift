@@ -105,7 +105,7 @@ extension PixelBuffer {
     }
 
     init(cgImage: CGImage) throws {
-        var source = try vImage_Buffer(cgImage: cgImage, format: Self.format)
+        let source = try vImage_Buffer(cgImage: cgImage, format: Self.format)
         defer { source.free() }
 
         let width = Int(source.width)
@@ -125,7 +125,7 @@ extension PixelBuffer {
     }
 
     func cgImage() throws -> CGImage {
-        var buffer = try vImage_Buffer(width: width, height: height, bitsPerPixel: 32)
+        let buffer = try vImage_Buffer(width: width, height: height, bitsPerPixel: 32)
         defer { buffer.free() }
 
         let rowBytes = width * Self.bytesPerPixel

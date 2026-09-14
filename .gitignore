@@ -9,3 +9,6 @@ readme_assets/_new/
 
 # Custom folder icon; its data lives in the resource fork, Git only sees 0 bytes
 Icon?
+
+# Disk image build output
+dmg_build/

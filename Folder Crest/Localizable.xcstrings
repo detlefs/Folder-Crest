@@ -139,6 +139,17 @@
         }
       }
     },
+    "Drag an [SF Symbol](https://developer.apple.com/sf-symbols/), image, or folder here" : {
+      "comment" : "Hint under the large folder preview; keep the link around “SF Symbol”",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[SF Symbol](https://developer.apple.com/sf-symbols/), Bild oder Ordner hierher ziehen"
+          }
+        }
+      }
+    },
     "Engraved" : {
       "comment" : "Rendering mode: cut into the folder",
       "localizations" : {
@@ -278,6 +289,17 @@
         }
       }
     },
+    "Load from Library" : {
+      "comment" : "File menu entry that loads the selected library icon again",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aus Sammlung laden"
+          }
+        }
+      }
+    },
     "macOS refused to set the icon of “%@”." : {
       "comment" : "Error when NSWorkspace declines to write a folder icon",
       "localizations" : {
@@ -321,7 +343,15 @@
       }
     },
     "Name" : {
-      "comment" : "Label of the field that renames a saved icon"
+      "comment" : "Label of the field that renames a saved icon",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        }
+      }
     },
     "New folder in" : {
       "comment" : "Label before the folder the new folder is created in",
@@ -505,6 +535,17 @@
         }
       }
     },
+    "Save to Library" : {
+      "comment" : "File menu entry that adds the current icon to the library",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In Sammlung sichern"
+          }
+        }
+      }
+    },
     "Semibold" : {
       "localizations" : {
         "de" : {
@@ -682,39 +723,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gelb"
-          }
-        }
-      }
-    },
-    "Drag an [SF Symbol](https://developer.apple.com/sf-symbols/), image, or folder here" : {
-      "comment" : "Hint under the large folder preview; keep the link around “SF Symbol”",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "[SF Symbol](https://developer.apple.com/sf-symbols/), Bild oder Ordner hierher ziehen"
-          }
-        }
-      }
-    },
-    "Save to Library" : {
-      "comment" : "File menu entry that adds the current icon to the library",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In Sammlung sichern"
-          }
-        }
-      }
-    },
-    "Load from Library" : {
-      "comment" : "File menu entry that loads the selected library icon again",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aus Sammlung laden"
           }
         }
       }

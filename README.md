@@ -89,6 +89,29 @@ Folder Crest was built with the help of AI: large parts of the code, the tests
 and the documentation were written together with
 [Claude Code](https://claude.com/claude-code).
 
+## Contributing
+
+Pull requests are welcome - bug fixes, new features and translations alike. For larger changes, please open an issue first to discuss the idea.
+
+1. Fork the repository and create a branch from `master`.
+2. Make your changes and run the tests (see [Building](#building)).
+3. Commit with a short, descriptive message and open a pull request against `master`, describing what you changed and why.
+
+### Localization
+
+All user-facing text lives in a single String Catalog, `Folder Crest/Localizable.xcstrings`. To add a language:
+
+1. Open `Folder Crest.xcodeproj` in Xcode, select the project, go to **Info → Localizations** and add the language with **+**.
+2. Open `Localizable.xcstrings`, select the new language and translate every entry. Mark entries as reviewed once they are done.
+3. Build and run the app with the new language and check that no text is cut off. In Xcode, set **Product → Scheme → Edit Scheme → Run → Options → App Language**, or from the command line (replace `fr` with the language code):
+
+   ```bash
+   xcodebuild -project "Folder Crest.xcodeproj" -scheme "Folder Crest" \
+     -destination 'platform=macOS' -derivedDataPath build build
+   open -n "build/Build/Products/Debug/Folder Crest.app" --args -AppleLanguages "(fr)"
+   ```
+4. Add the language to the list under **Features & Usage** and open a pull request.
+
 ## License
 
 Released under the [MIT License](LICENSE).

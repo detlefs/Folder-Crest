@@ -71,6 +71,7 @@ final class LibrarySelectionUITests: XCTestCase {
     }
 
     /// The thumbnail sits left of the name, 36 points wide with 10 between.
+    @MainActor
     private func thumbnail(of name: XCUIElement) -> XCUICoordinate {
         name.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.5))
             .withOffset(CGVector(dx: -28, dy: 6))

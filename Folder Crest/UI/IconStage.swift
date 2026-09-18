@@ -192,7 +192,10 @@ struct DestinationRow: View {
                     Text("New folder in", comment: "Label before the folder the new folder is created in")
                         .font(.callout)
                 }
-                Text(studio.destinationName).fontWeight(.semibold)
+                Text(studio.destinationName)
+                    .fontWeight(.semibold)
+                    .lineLimit(1)
+                    .truncationMode(.middle)
 
                 Button {
                     studio.chooseLocation()
@@ -200,6 +203,7 @@ struct DestinationRow: View {
                     Text("Change…", comment: "Button that opens the folder chooser")
                 }
                 .controlSize(.small)
+                .fixedSize()
 
                 Spacer()
 
@@ -208,6 +212,7 @@ struct DestinationRow: View {
                 } label: {
                     Text("Reset All", comment: "Button that resets every setting")
                 }
+                .fixedSize()
 
                 Button {
                     Task { await studio.applyToFolder() }
@@ -215,6 +220,7 @@ struct DestinationRow: View {
                     Text("Apply to Folder", comment: "Primary button that writes the icon onto a folder")
                 }
                 .buttonStyle(.borderedProminent)
+                .fixedSize()
                 .disabled(studio.isApplying)
             }
 

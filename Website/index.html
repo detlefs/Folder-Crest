@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Folder Crest</title>
+<meta name="description" content="Folder Crest is a native macOS app that engraves text, emoji, SF Symbols or images into your folder icons.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="img/app-icon.png">
+<link rel="preload" href="img/app-icon.png" as="image">
+<!-- Runs before first paint so the chosen theme and language never flash -->
+<script>
+(function () {
+  var d = document.documentElement;
+  try {
+    var t = localStorage.getItem("fc-theme");
+    if (t === "light" || t === "dark") d.dataset.theme = t;
+    var l = localStorage.getItem("fc-lang") || (navigator.language || "en").slice(0, 2);
+    d.lang = l === "de" ? "de" : "en";
+  } catch (e) {}
+})();
+</script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <a class="brand" href="#top" aria-label="Folder Crest">
+    <img src="img/app-icon.png" alt="" width="32" height="32">
+    <span>Folder Crest</span>
+  </a>
+  <nav class="nav-links" aria-label="Main">
+    <a href="#features"><span lang="en">Features</span><span lang="de">Funktionen</span></a>
+    <a href="#gallery"><span lang="en">Gallery</span><span lang="de">Galerie</span></a>
+    <a href="#requirements"><span lang="en">Requirements</span><span lang="de">Voraussetzungen</span></a>
+    <a href="https://github.com/detlefs/Folder-Crest/issues" target="_blank" rel="noopener noreferrer"><span lang="en">Contact</span><span lang="de">Kontakt</span></a>
+  </nav>
+  <div class="nav-tools">
+    <button class="tool" id="lang-toggle" type="button" aria-label="Switch language / Sprache wechseln">
+      <span lang="en">DE</span><span lang="de">EN</span>
+    </button>
+    <button class="tool" id="theme-toggle" type="button" aria-label="Switch theme / Design wechseln">
+      <span class="theme-label" data-mode="auto">Auto</span>
+    </button>
+    <a class="btn btn-small" href="https://github.com/detlefs/Folder-Crest/releases/latest" target="_blank" rel="noopener noreferrer" data-release>Download</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>
+        <span lang="en">A crest for every <em>folder.</em></span>
+        <span lang="de">Ein Wappen für jeden <em>Ordner.</em></span>
+      </h1>
+      <p class="lead">
+        <span lang="en">Engrave text, emoji, SF Symbols or images into the macOS folder icon. Native for Apple silicon.</span>
+        <span lang="de">Gravier Text, Emoji, SF Symbols oder Bilder ins macOS-Ordnersymbol. Nativ für Apple silicon.</span>
+      </p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/detlefs/Folder-Crest/releases/latest" target="_blank" rel="noopener noreferrer" data-release>Download</a>
+        <a class="btn btn-ghost" href="https://github.com/detlefs/Folder-Crest" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </div>
+    </div>
+
+    <div class="stage" id="stage" aria-hidden="true">
+      <div class="stage-glow"></div>
+      <img class="float f1" src="img/icons/Cars.png" alt="" width="512" height="512">
+      <img class="float f2" src="img/icons/Weather.png" alt="" width="512" height="512">
+      <div class="stage-main">
+        <img class="slide is-on" src="img/icons/Audio-Colors.png" alt="" width="512" height="512" fetchpriority="high">
+        <img class="slide" src="img/icons/Docker-Colors.png" alt="" width="512" height="512">
+        <img class="slide" src="img/icons/Airplane-Colors.png" alt="" width="512" height="512">
+        <img class="slide" src="img/icons/Xcode.png" alt="" width="512" height="512">
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery: the only marquee on the page -->
+  <section class="gallery" id="gallery" aria-label="Gallery">
+    <div class="marquee">
+      <ul class="track">
+        <li><img src="img/icons/Airplane.png" alt="Airplane folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Audio.png" alt="Audio folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Cars.png" alt="Cars folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Docker.png" alt="Docker folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Fantasy.png" alt="Fantasy folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Games.png" alt="Games folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/In-Outbox.png" alt="Inbox and outbox folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Linux.png" alt="Linux folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Money.png" alt="Money folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Movie.png" alt="Movie folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Network.png" alt="Network folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Puzzle.png" alt="Puzzle folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/SignedPDFs.png" alt="Signed PDFs folder icon" width="512" height="512" loading="lazy"></li>
+        <li><img src="img/icons/Xcode.png" alt="Xcode folder icon" width="512" height="512" loading="lazy"></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Features: bento, 4 items = 4 cells -->
+  <section class="features" id="features">
+    <h2>
+      <span lang="en">Four things, done properly.</span>
+      <span lang="de">Vier Dinge, sauber gemacht.</span>
+    </h2>
+
+    <div class="bento">
+      <article class="cell c-engrave reveal">
+        <div class="cell-text">
+          <h3><span lang="en">Engrave anything</span><span lang="de">Alles gravieren</span></h3>
+          <p>
+            <span lang="en">Text, emoji, SF Symbols or images. Engraved into the folder, or placed on top in their own colors.</span>
+            <span lang="de">Text, Emoji, SF Symbols oder Bilder. In den Ordner graviert oder in Originalfarben aufgelegt.</span>
+          </p>
+        </div>
+        <div class="pair">
+          <figure>
+            <img src="img/icons/Audio.png" alt="Folder with an engraved headphone symbol" width="512" height="512" loading="lazy">
+            <figcaption><span lang="en">Engraved</span><span lang="de">Graviert</span></figcaption>
+          </figure>
+          <figure>
+            <img src="img/icons/Audio-Colors.png" alt="Folder with a headphone symbol in original colors" width="512" height="512" loading="lazy">
+            <figcaption><span lang="en">Original colors</span><span lang="de">Originalfarben</span></figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="cell c-color reveal">
+        <h3><span lang="en">Folder color</span><span lang="de">Ordnerfarbe</span></h3>
+        <p>
+          <span lang="en">Tint the whole folder. Pick a color, try it right here.</span>
+          <span lang="de">Tönt den ganzen Ordner. Farbe wählen, gleich hier ausprobieren.</span>
+        </p>
+        <img class="tint-preview" id="tint-preview" src="img/icons/Puzzle.png" alt="Folder icon in the selected color" width="512" height="512" loading="lazy">
+        <div class="swatches" role="group" aria-label="Folder color">
+          <button type="button" class="sw" data-hue="0" aria-label="Original" aria-pressed="true"></button>
+          <button type="button" class="sw" data-hue="60" aria-label="Hue 60" aria-pressed="false"></button>
+          <button type="button" class="sw" data-hue="140" aria-label="Hue 140" aria-pressed="false"></button>
+          <button type="button" class="sw" data-hue="210" aria-label="Hue 210" aria-pressed="false"></button>
+          <button type="button" class="sw" data-hue="290" aria-label="Hue 290" aria-pressed="false"></button>
+        </div>
+      </article>
+
+      <article class="cell c-apply reveal">
+        <h3><span lang="en">Apply</span><span lang="de">Anwenden</span></h3>
+        <p>
+          <span lang="en">To a new or an existing folder, in every size from 16 to 1024 px.</span>
+          <span lang="de">Auf neuen oder vorhandenen Ordner, in allen Größen von 16 bis 1024 px.</span>
+        </p>
+        <div class="sizes" aria-hidden="true">
+          <img src="img/icons/Docker.png" alt="" width="128" height="128" style="--s:16px" loading="lazy">
+          <img src="img/icons/Docker.png" alt="" width="128" height="128" style="--s:32px" loading="lazy">
+          <img src="img/icons/Docker.png" alt="" width="128" height="128" style="--s:64px" loading="lazy">
+          <img src="img/icons/Docker.png" alt="" width="128" height="128" style="--s:128px" loading="lazy">
+        </div>
+      </article>
+
+      <article class="cell c-library reveal">
+        <div class="cell-text">
+          <h3><span lang="en">Your collection</span><span lang="de">Deine Sammlung</span></h3>
+          <p>
+            <span lang="en">Save icons and load them back later. The library keeps the recipe, so every icon can be rendered again.</span>
+            <span lang="de">Icons sichern und später wieder laden. Die Sammlung speichert das Rezept, jedes Icon lässt sich neu rendern.</span>
+          </p>
+        </div>
+        <ul class="library">
+          <li><img src="img/icons/Fantasy.png" alt="" width="64" height="64" loading="lazy"><span>Fantasy</span></li>
+          <li><img src="img/icons/Games.png" alt="" width="64" height="64" loading="lazy"><span>Games</span></li>
+          <li><img src="img/icons/Money.png" alt="" width="64" height="64" loading="lazy"><span>Money</span></li>
+          <li><img src="img/icons/Network.png" alt="" width="64" height="64" loading="lazy"><span>Network</span></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- Requirements -->
+  <section class="req" id="requirements">
+    <h2><span lang="en">Before you download</span><span lang="de">Vor dem Download</span></h2>
+    <div class="req-grid">
+      <div>
+        <h3><span lang="en">Requirements</span><span lang="de">Voraussetzungen</span></h3>
+        <p>
+          <span lang="en">macOS 26 Tahoe or later, on Apple silicon. There is no Intel build.</span>
+          <span lang="de">macOS 26 Tahoe oder neuer auf Apple silicon. Einen Intel-Build gibt es nicht.</span>
+        </p>
+      </div>
+      <div>
+        <h3><span lang="en">First launch</span><span lang="de">Erster Start</span></h3>
+        <p>
+          <span lang="en">The app is not notarized yet. Right-click it and choose Open, once. macOS remembers your choice.</span>
+          <span lang="de">Die App ist noch nicht notarisiert. Einmal per Rechtsklick auf Öffnen starten. macOS merkt sich die Wahl.</span>
+        </p>
+      </div>
+      <div>
+        <h3><span lang="en">Good to know</span><span lang="de">Gut zu wissen</span></h3>
+        <p>
+          <span lang="en">Icons are written as finished images. Changing the system folder color later does not recolor them.</span>
+          <span lang="de">Icons werden als fertige Bilder geschrieben. Eine spätere Änderung der Systemordnerfarbe färbt sie nicht um.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-cta">
+    <img src="img/app-icon.png" alt="" width="72" height="72" loading="lazy">
+    <a class="btn" href="https://github.com/detlefs/Folder-Crest/releases/latest" target="_blank" rel="noopener noreferrer" data-release>Download</a>
+  </div>
+  <div class="foot-links">
+    <a href="https://github.com/detlefs/Folder-Crest/issues" target="_blank" rel="noopener noreferrer"><span lang="en">Contact</span><span lang="de">Kontakt</span></a>
+    <a href="https://github.com/detlefs/Folder-Crest" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="https://github.com/detlefs/Folder-Crest/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">
+      <span lang="en">MIT License</span><span lang="de">MIT-Lizenz</span>
+    </a>
+  </div>
+  <p class="disclaimer">
+    <span lang="en">Folder Crest was written largely with the help of AI. If that is not for you, that is completely fine.</span>
+    <span lang="de">Folder Crest wurde größtenteils mit Hilfe von KI programmiert. Wenn das nichts für dich ist, ist das völlig in Ordnung.</span>
+  </p>
+</footer>
+
+<script src="vendor/gsap.min.js" defer></script>
+<script src="vendor/ScrollTrigger.min.js" defer></script>
+<script src="app.js" defer></script>
+<script type="module" src="bg.js"></script>
+</body>
+</html>

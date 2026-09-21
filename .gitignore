@@ -9,6 +9,8 @@ readme_assets/_new/
 
 # Custom folder icon; its data lives in the resource fork, Git only sees 0 bytes
 Icon?
+# Website gallery folder is called "icons" and would match Icon? on case-insensitive setups
+!/Website/img/icons/
 
 # Disk image build output
 dmg_build/

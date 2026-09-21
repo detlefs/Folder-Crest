@@ -221,7 +221,7 @@ struct DestinationRow: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .fixedSize()
-                .disabled(studio.isApplying)
+                .disabled(!studio.canApply)
             }
 
             Text("A dropped folder replaces the target and gets its icon set directly.",

@@ -59,6 +59,22 @@ struct MainView: View {
         } message: {
             Text(studio.lastError ?? "")
         }
+        .confirmationDialog(
+            Text("Remove the custom icon from “\(studio.destinationName)”?",
+                 comment: "Title of the confirmation before a folder's custom icon is removed"),
+            isPresented: Binding(get: { studio.confirmingRemoval },
+                                 set: { studio.confirmingRemoval = $0 }),
+            titleVisibility: .visible
+        ) {
+            Button(role: .destructive) {
+                studio.removeCustomIcon()
+            } label: {
+                Text("Remove", comment: "Destructive button that removes a folder's custom icon")
+            }
+        } message: {
+            Text("The folder returns to the default macOS icon. This also removes icons set by other tools.",
+                 comment: "Message of the confirmation before a folder's custom icon is removed")
+        }
     }
 }
 

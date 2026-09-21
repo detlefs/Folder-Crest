@@ -43,6 +43,16 @@ enum FolderIconWriter {
         workspace.noteFileSystemChanged(folder.path)
     }
 
+    /// Removes any custom icon: the `Icon\r` file and the custom-icon flag.
+    /// Harmless on a folder that was never customized.
+    static func removeCustomIcon(from folder: URL) throws {
+        let workspace = NSWorkspace.shared
+        guard workspace.setIcon(nil, forFile: folder.path, options: []) else {
+            throw WriteError.refused(path: folder.lastPathComponent)
+        }
+        workspace.noteFileSystemChanged(folder.path)
+    }
+
     private static func iconFamily(from buffer: PixelBuffer) throws -> NSImage {
         let largest = Constants.iconSizes.max() ?? 1024
         let image = NSImage(size: NSSize(width: largest, height: largest))

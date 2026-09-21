@@ -42,6 +42,9 @@ final class IconStudio {
     private(set) var isRendering = false
     private(set) var isApplying = false
     var lastError: String?
+    /// Set when Apply would remove the customization of `existingFolder`; the
+    /// UI asks before `removeCustomIcon()` runs.
+    var confirmingRemoval = false
 
     /// Where a new folder gets created, unless an existing one was dropped.
     private(set) var newFolderLocation = FileManager.default.urls(for: .desktopDirectory,
@@ -102,6 +105,15 @@ final class IconStudio {
     var hasSource: Bool {
         if case .none = source { return false }
         return true
+    }
+
+    /// Nothing to put on the folder: applying this means "back to the default".
+    var isDefaultIcon: Bool { !hasSource && tint == nil }
+
+    /// A default icon needs a dropped folder to act on; there is nothing to
+    /// reset in a folder that does not exist yet.
+    var canApply: Bool {
+        !isApplying && !(isDefaultIcon && existingFolder == nil)
     }
 
     var destinationName: String {
@@ -265,7 +277,11 @@ final class IconStudio {
     /// Applies the icon to the target folder, waiting for a render that is
     /// still in flight rather than writing the previous one.
     func applyToFolder() async {
-        guard !isApplying else { return }
+        guard canApply else { return }
+        if isDefaultIcon {
+            confirmingRemoval = true
+            return
+        }
         if existingFolder == nil && !locationGranted {
             guard chooseLocation() else { return }
         }
@@ -283,6 +299,17 @@ final class IconStudio {
                 target = try FolderIconWriter.makeUniqueFolder(in: newFolderLocation)
             }
             try FolderIconWriter.setIcon(rendered, on: target)
+            existingFolder = nil
+        } catch {
+            lastError = error.localizedDescription
+        }
+    }
+
+    /// Removes the customization from the dropped folder, after the user confirmed.
+    func removeCustomIcon() {
+        guard let folder = existingFolder else { return }
+        do {
+            try FolderIconWriter.removeCustomIcon(from: folder)
             existingFolder = nil
         } catch {
             lastError = error.localizedDescription

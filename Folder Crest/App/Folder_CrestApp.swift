@@ -118,7 +118,7 @@ struct FileCommands: Commands {
                 Text("Apply to Folder", comment: "Primary button that writes the icon onto a folder")
             }
             .keyboardShortcut(.return, modifiers: .command)
-            .disabled(studio.isApplying)
+            .disabled(!studio.canApply)
         }
     }
 }

@@ -480,6 +480,17 @@
         }
       }
     },
+    "Remove" : {
+      "comment" : "Destructive button that removes a folder's custom icon",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entfernen"
+          }
+        }
+      }
+    },
     "Remove Icon" : {
       "comment" : "Button that deletes the selected icon",
       "localizations" : {
@@ -487,6 +498,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Icon entfernen"
+          }
+        }
+      }
+    },
+    "Remove the custom icon from “%@”?" : {
+      "comment" : "Title of the confirmation before a folder's custom icon is removed",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eigenes Icon von „%@“ entfernen?"
           }
         }
       }
@@ -520,6 +542,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alles zurücksetzen"
+          }
+        }
+      }
+    },
+    "The folder returns to the default macOS icon. This also removes icons set by other tools." : {
+      "comment" : "Message of the confirmation before a folder's custom icon is removed",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Ordner erhält wieder das Standard-Icon von macOS. Dabei werden auch Icons entfernt, die von anderen Tools gesetzt wurden."
           }
         }
       }

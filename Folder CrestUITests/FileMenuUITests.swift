@@ -39,11 +39,17 @@ final class FileMenuUITests: XCTestCase {
     }
 
     /// Nothing was chosen yet, so applying asks where the folder goes — the
-    /// sandbox would refuse the Desktop default otherwise.
+    /// sandbox would refuse the Desktop default otherwise. The default icon
+    /// has nothing to apply to a new folder, so the icon gets some text first.
     @MainActor
     func testApplyShortcutAsksForTheLocation() throws {
         let app = launch()
         XCTAssertTrue(app.windows.firstMatch.waitForExistence(timeout: 10), "no window")
+
+        let source = app.textFields["Text or Emoji"]
+        XCTAssertTrue(source.waitForExistence(timeout: 10), "no text field")
+        source.click()
+        source.typeText("A")
 
         app.typeKey(.return, modifierFlags: .command)
 

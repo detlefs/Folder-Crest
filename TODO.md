@@ -3,6 +3,49 @@
 Offene Punkte der Portierung. Der vollständige Plan, alle Messwerte und die
 Begründungen stehen in [PLAN.md](PLAN.md); hier steht nur, was noch zu tun ist.
 
+## Bekannter Blocker: Crash beim Resizen der Sidebar auf macOS 27.0 (26A428)
+
+Auf MacNeo (identischer macOS-Stand wie der Build-Rechner, keine Updates
+verfügbar) crasht die App zuverlässig mit `SIGABRT`/`EXC_BREAKPOINT`, sobald
+die `NavigationSplitView`-Trennlinie in `MainView.swift` per Maus gezogen
+wird — Reports in `CrashReports/`. Durchprobiert und als Ursache
+ausgeschlossen: `window.contentMinSize` in `AppDelegate` (leer gelassen,
+crasht weiter), `navigationSplitViewColumnWidth(min:ideal:max:)` an der
+Sidebar (auf die Einzelwert-Überladung `navigationSplitViewColumnWidth(240)`
+reduziert, crasht beim Resizen weiter), `.disabled(library == nil)` an den
+Toolbar-/Menü-Buttons in `FileCommands` (entfernt, crasht weiter).
+
+Jeder Crash-Report zeigt denselben Kern, nur über unterschiedliche Auslöser:
+`NSHostingView` invalidiert während des eigenen Live-Resize-Layouts seine
+Size-Constraints, und `-[NSWindow(NSDisplayCycle) _postWindowNeedsUpdateConstraints]`
+wirft, weil das mitten in einem bereits laufenden Constraint-Update-Pass des
+Fensters passiert. Das sieht nach einem AppKit/SwiftUI-Regressionsbug in
+26A428 aus, der grundsätzlich jede live resizbare `NavigationSplitView` mit
+`NSHostingView`-Inhalt treffen kann — nicht spezifisch an Folder-Crest-Code
+gebunden. Ein zuverlässiger App-seitiger Workaround wurde nicht gefunden
+(auch mit stillgelegtem `.inspector`, fixer Spaltenbreite und entfernten
+`.disabled`-Bindings tritt derselbe Crash weiterhin auf — teils schon beim
+Start, teils erst beim Resize). Low Power Mode als Erklärung für den
+Unterschied zwischen Build-Rechner und MacNeo ausgeschlossen: MacNeo crasht
+mit Low Power Mode sowohl an als auch aus identisch.
+
+**Bestätigt per `lldb` auf MacNeo** (Breakpoint auf `objc_exception_throw`,
+`CrashReports/DebugOutput1.txt`), der tatsächliche `NSException`-Reason:
+
+> The window has been marked as needing another Update Constraints in
+> Window pass, but it has already had more Update Constraints in Window
+> passes than there are views in the window.
+
+Das ist AppKits eingebauter Loop-Detector für die Update-Constraints-Kette:
+Er bricht ab, sobald ein Fenster öfter als View-Anzahl erneut als
+update-bedürftig markiert wird. Der Stack davor zeigt
+`NSHostingView.invalidateSizeConstraintsIfNecessary()`, das das Fenster
+wiederholt neu markiert, ohne dass der Layout-Zyklus konvergiert — ein
+Endlosschleifen-Bug zwischen SwiftUI und AppKit in diesem Build, keine
+Folder-Crest-spezifische Ursache. Crash-Reports an Apple gemeldet
+(Feedback Assistant, Entwicklertechnologien & SDKs). Nächste Schritte:
+auf einen späteren macOS-27-Build testen, sobald verfügbar.
+
 **Stand 2026-09-13 (1.2, Build 3):** Schritte 0–9, 11, 12 erledigt, 28 Unit-
 und 14 UI-Tests grün (Debug wie Release). Offen ist Schritt 10 und das Drumherum.
 

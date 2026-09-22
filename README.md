@@ -6,7 +6,22 @@
 
 A native macOS app that puts a crest on your folders: text, emoji, an SF Symbol or any image, engraved into the macOS folder icon or placed on top in its own colors - with an optional tint for the whole folder.
 
+
 ![Folder icons made with Folder Crest](readme_assets/carousel.png)
+
+</div>
+
+---
+
+<div align="center">
+
+<a href="https://github.com/detlefs/Folder-Crest/blob/19335a56019bfe77933c669a8279e7b25b607a86/LICENSE" target="_blank"><img alt="Static Badge" src="https://img.shields.io/badge/license-MIT-green"></a>&nbsp;
+<a href="https://github.com/detlefs/Folder-Crest/releases/latest"><img alt="GitHub Release" src="https://img.shields.io/github/v/release/detlefs/Folder-Crest"></a>&nbsp;
+<img alt="GitHub Issues" src="https://img.shields.io/github/issues/detlefs/Folder-Crest">&nbsp;
+<a href="https://github.com/detlefs/Folder-Crest/actions/workflows/build.yml"><img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/detlefs/Folder-Crest/build.yml"></a>&nbsp;
+<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/detlefs/Folder-Crest">&nbsp;
+<img alt="Static Badge" src="https://img.shields.io/badge/langs-EN%2C%20DE-white">&nbsp;
+
 
 </div>
 
@@ -14,7 +29,7 @@ A native macOS app that puts a crest on your folders: text, emoji, an SF Symbol 
 
 ## Get started
 
-💾 Download latest Folder Crest release
+💾 [Download latest Folder Crest release](https://github.com/detlefs/Folder-Crest/releases/latest)
 
 💾 [Download the latest SF Symbols tool](https://developer.apple.com/sf-symbols/) (optional)
 

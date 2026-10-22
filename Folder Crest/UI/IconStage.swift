@@ -179,6 +179,11 @@ struct SourceStrip: View {
 
 // MARK: - Destination
 
+/// The buttons keep their full width through `layoutPriority`, not
+/// `fixedSize`: a fixed button turns its ideal width into a hard minimum of the
+/// split view's detail column, and on macOS 27 that minimum is re-reported
+/// during the window's own constraint pass until AppKit's loop detector aborts
+/// the app — at launch and while a divider is dragged. See issue #6.
 struct DestinationRow: View {
     @Environment(IconStudio.self) private var studio
 
@@ -203,7 +208,7 @@ struct DestinationRow: View {
                     Text("Change…", comment: "Button that opens the folder chooser")
                 }
                 .controlSize(.small)
-                .fixedSize()
+                .layoutPriority(1)
 
                 Spacer()
 
@@ -212,7 +217,7 @@ struct DestinationRow: View {
                 } label: {
                     Text("Reset All", comment: "Button that resets every setting")
                 }
-                .fixedSize()
+                .layoutPriority(1)
 
                 Button {
                     Task { await studio.applyToFolder() }
@@ -220,7 +225,7 @@ struct DestinationRow: View {
                     Text("Apply to Folder", comment: "Primary button that writes the icon onto a folder")
                 }
                 .buttonStyle(.borderedProminent)
-                .fixedSize()
+                .layoutPriority(1)
                 .disabled(!studio.canApply)
             }
 

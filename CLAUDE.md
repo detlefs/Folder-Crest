@@ -15,7 +15,7 @@ Architektur, Pipeline-Entscheidungen (CPU statt Core Image), Pillow-Fallen, Layo
 - Synchronisierte Ordner: Dateien im Zielordner sind automatisch Target-Mitglied. `project.pbxproj` nie von Hand um Dateien erweitern. Alles im Ordner landet auch im Bundle — `Scripts/` liegt deshalb auf Repo-Ebene.
 - Debug steht auf `SWIFT_OPTIMIZATION_LEVEL = -O` (mit `-Onone` 50× langsamer). Nicht zurückdrehen; `@_optimize(speed)` bringt nichts.
 - Für Xcode-Previews das Scheme `Folder Crest (Preview)` (Konfiguration Preview, `-Onone`) nutzen. Beide Schemes bleiben unter Versionskontrolle.
-- Für reproduzierbare Läufe `-derivedDataPath` setzen (Xcode legt sonst eine zweite DerivedData-Ablage an).
+- Immer mit `-derivedDataPath ~/Library/Developer/Xcode/DerivedData/Folder-Crest` bauen (Xcode legt sonst eine zweite DerivedData-Ablage an). Der Symlink `Build` im Repo zeigt auf deren `Build/Products`.
 - Deployment Target bleibt 26.0. Die Kalibrierung in `FolderGraphic.swift` ist gegen die macOS-26-Grafik vermessen und trägt auch unter macOS 27 (nachgemessen 2026-09-16).
 - Nach App-Icon-Wechsel zeigt der Symbolstil „Dunkel" das alte Icon: Icon-Cache, nicht der Build. Erst `xcrun assetutil --info`, dann `touch`, `lsregister -f`, `killall Dock`.
 
@@ -24,9 +24,9 @@ Architektur, Pipeline-Entscheidungen (CPU statt Core Image), Pillow-Fallen, Layo
 Das gesagte Stichwort entscheidet, nicht der Umfang der Änderung. Ohne Stichwort bei Codeänderungen der Testbuild.
 
 - **„Schneller Build"** → nur Debug bauen, keine Tests:
-`xcodebuild -project "Folder Crest.xcodeproj" -scheme "Folder Crest" -destination 'platform=macOS' build`
+`xcodebuild -project "Folder Crest.xcodeproj" -scheme "Folder Crest" -destination 'platform=macOS' -derivedDataPath ~/Library/Developer/Xcode/DerivedData/Folder-Crest build`
 - **„Testbuild"** → Debug bauen, nur Unit-Tests:
-`… -destination 'platform=macOS' -skip-testing:"Folder CrestUITests" test`
+`… -destination 'platform=macOS' -derivedDataPath ~/Library/Developer/Xcode/DerivedData/Folder-Crest -skip-testing:"Folder CrestUITests" test`
 - **„Voller Build"** → Debug-Test mit UI-Tests, dazu Release-Test ohne UI-Tests (`-configuration Release ENABLE_TESTABILITY=YES -skip-testing:"Folder CrestUITests" test`) und ein Release-Build.
 - **"DMG Build"** → Erstelle eine DMG. Ein Release-Build wird nur erstellt, wenn notwendig (Code-änderungen, version) 
 
